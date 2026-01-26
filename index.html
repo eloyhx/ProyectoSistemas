@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia de SO y Lenguaje Batch - Curso Interactivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================================
+           CUSTOM PROPERTIES (VARIABLES CSS)
+           ============================================ */
+        :root {
+            --naranja: #ff7b00;
+            --azul: #00c3ff;
+            --verde: #39ff14;
+            --bg-claro: #ffffff;
+            --bg-oscuro: #0a0a0a;
+            --text-claro: #1a1a1a;
+            --text-oscuro: #f0f0f0;
+            --card-bg-claro: #f8f9fa;
+            --card-bg-oscuro: #1a1a1a;
+            --sombra: 0 8px 20px rgba(0,0,0,0.08);
+            --sombra-hover: 0 12px 30px rgba(0,0,0,0.15);
+            --radius: 20px;
+            --transicion: all 0.3s ease;
+        }
+
+        /* Dark mode variables */
+        html.dark {
+            --bg-claro: var(--bg-oscuro);
+            --text-claro: var(--text-oscuro);
+            --card-bg-claro: var(--card-bg-oscuro);
+            --sombra: 0 8px 20px rgba(255,255,255,0.05);
+            --sombra-hover: 0 12px 30px rgba(255,255,255,0.1);
+        }
+
+        /* ============================================
+           RESET Y BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-claro);
+            color: var(--text-claro);
+            line-height: 1.6;
+            transition: var(--transicion);
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           NAVEGACIÓN STICKY
+           ============================================ */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--naranja), #ff9500);
+            box-shadow: var(--sombra);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: var(--transicion);
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-theme {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transicion);
+        }
+
+        .btn-theme:hover {
+            background: white;
+            color: var(--naranja);
+            transform: rotate(180deg);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(0,195,255,0.1), rgba(57,255,20,0.1));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,123,0,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeSlideUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--naranja), var(--azul));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* ============================================
+           GRID DE TARJETAS PRINCIPALES
+           ============================================ */
+        .cards-container {
+            max-width: 1200px;
+            margin: -3rem auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: var(--card-bg-claro);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: var(--transicion);
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeSlideUp 0.6s ease forwards;
+            border: 2px solid transparent;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--sombra-hover);
+            border-color: var(--naranja);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transicion);
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card:nth-child(1) .card-icon { color: var(--naranja); }
+        .card:nth-child(2) .card-icon { color: var(--azul); }
+        .card:nth-child(3) .card-icon { color: var(--verde); }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-claro);
+        }
+
+        .card p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .btn-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transicion);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .card:nth-child(1) .btn-card {
+            background: var(--naranja);
+            color: white;
+        }
+
+        .card:nth-child(2) .btn-card {
+            background: var(--azul);
+            color: white;
+        }
+
+        .card:nth-child(3) .btn-card {
+            background: var(--verde);
+            color: #0a0a0a;
+        }
+
+        .btn-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* ============================================
+           SECCIONES DETALLE (OCULTAS INICIALMENTE)
+           ============================================ */
+        .section-detail {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-detail.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 2px solid var(--text-claro);
+            color: var(--text-claro);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transicion);
+        }
+
+        .back-btn:hover {
+            background: var(--text-claro);
+            color: var(--bg-claro);
+        }
+
+        /* ============================================
+           TIMELINE HISTORIA
+           ============================================ */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--naranja), var(--azul), var(--verde));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.6s ease forwards;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--card-bg-claro);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--sombra);
+            max-width: 400px;
+            margin: 0 2rem;
+            position: relative;
+            border-left: 4px solid var(--naranja);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 4px solid var(--azul);
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--naranja);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        /* ============================================
+           BATCH SECTION - NIVELES CON MODALES
+           ============================================ */
+        .batch-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .level-card {
+            background: linear-gradient(135deg, var(--card-bg-claro), rgba(0,195,255,0.05));
+            border: 2px solid var(--azul);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transicion);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--azul);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .level-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,195,255,0.2);
+        }
+
+        .level-icon {
+            font-size: 3rem;
+            color: var(--azul);
+            margin-bottom: 1rem;
+        }
+
+        .level-card.intermedio {
+            border-color: var(--naranja);
+        }
+
+        .level-card.intermedio::before {
+            background: var(--naranja);
+        }
+
+        .level-card.intermedio .level-icon {
+            color: var(--naranja);
+        }
+
+        .level-card.avanzado {
+            border-color: var(--verde);
+        }
+
+        .level-card.avanzado::before {
+            background: var(--verde);
+        }
+
+        .level-card.avanzado .level-icon {
+            color: var(--verde);
+        }
+
+        .level-tag {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: rgba(0,195,255,0.1);
+            color: var(--azul);
+        }
+
+        .level-card.intermedio .level-tag {
+            background: rgba(255,123,0,0.1);
+            color: var(--naranja);
+        }
+
+        .level-card.avanzado .level-tag {
+            background: rgba(57,255,20,0.1);
+            color: var(--verde);
+        }
+
+        /* ============================================
+           MODALES
+           ============================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--bg-claro);
+            border-radius: var(--radius);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8) translateY(50px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--azul), #0099cc);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-header.inicio { background: linear-gradient(135deg, var(--azul), #0099cc); }
+        .modal-header.intermedio { background: linear-gradient(135deg, var(--naranja), #cc6200); }
+        .modal-header.avanzado { background: linear-gradient(135deg, var(--verde), #2acc10); }
+
+        .modal-header h3 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transicion);
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 1rem 0;
+            position: relative;
+            border-left: 4px solid var(--verde);
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .command {
+            color: #569cd6;
+        }
+
+        .code-block .variable {
+            color: #9cdcfe;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .btn-section-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            background: var(--verde);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transicion);
+        }
+
+        .btn-section-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(57,255,20,0.4);
+        }
+
+        /* Sección Avanzada - Explicación línea por línea */
+        .line-explanation {
+            background: var(--card-bg-claro);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--verde);
+        }
+
+        .line-number {
+            display: inline-block;
+            background: var(--verde);
+            color: #0a0a0a;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .line-desc {
+            margin-left: 1rem;
+            color: var(--text-claro);
+            opacity: 0.9;
+        }
+
+        /* ============================================
+           SECCIÓN DESCARGAS
+           ============================================ */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .download-card {
+            background: var(--card-bg-claro);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--sombra);
+            transition: var(--transicion);
+            border: 2px solid transparent;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--verde);
+        }
+
+        .download-icon {
+            font-size: 3rem;
+            color: var(--verde);
+            margin-bottom: 1rem;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--verde);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: var(--transicion);
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(57,255,20,0.3);
+        }
+
+        /* ============================================
+           CERTIFICADO
+           ============================================ */
+        .certificado-container {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(255,123,0,0.1), rgba(0,195,255,0.1));
+            border-radius: var(--radius);
+            margin: 2rem 0;
+        }
+
+        .btn-certificado {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--naranja), #ff9500);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transicion);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-certificado:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,123,0,0.4);
+        }
+
+        .certificado-display {
+            display: none;
+            margin-top: 2rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, #fff9f0, #fff);
+            border: 4px solid var(--naranja);
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+            animation: certificadoAppear 0.8s ease;
+            color: #1a1a1a;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        html.dark .certificado-display {
+            background: linear-gradient(135deg, #2a2520, #1a1a1a);
+            color: #f0f0f0;
+        }
+
+        @keyframes certificadoAppear {
+            0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+            50% { transform: scale(1.05) rotate(2deg); }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .certificado-display::before {
+            content: '✓';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: var(--verde);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            opacity: 0.2;
+        }
+
+        .certificado-titulo {
+            font-size: 2rem;
+            color: var(--naranja);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .certificado-nombre {
+            font-size: 1.8rem;
+            color: var(--azul);
+            margin: 1rem 0;
+            font-weight: 600;
+            border-bottom: 2px solid var(--naranja);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .certificado-fecha {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background: var(--card-bg-claro);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* ============================================
+           ANIMACIONES
+           ============================================ */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--naranja);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+
+            .timeline-content {
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .timeline-year {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                margin-top: -2rem;
+            }
+
+            .modal {
+                margin: 1rem;
+                max-height: 85vh;
+            }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-claro);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--naranja);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff9500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         NAVEGACIÓN
+         ============================================ -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>SO & Batch Master</span>
+            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio" class="nav-link active" onclick="showSection('inicio')">Inicio</a></li>
+                <li><a href="#historia" class="nav-link" onclick="showSection('historia-detalle')">Historia SO</a></li>
+                <li><a href="#batch" class="nav-link" onclick="showSection('batch-detalle')">Lenguaje Batch</a></li>
+                <li><a href="#descargas" class="nav-link" onclick="showSection('descargas-detalle')">Descargas</a></li>
+            </ul>
+
+            <div class="nav-controls">
+                <button class="btn-theme" onclick="toggleTheme()" title="Cambiar tema">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ============================================
+         SECCIÓN INICIO (HERO + TARJETAS)
+         ============================================ -->
+    <main id="inicio">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Domina los Sistemas Operativos y Batch Scripting</h1>
+                <p>Aprende la historia de la computación y automatiza tareas como un profesional con nuestro curso interactivo completo.</p>
+            </div>
+        </section>
+
+        <div class="cards-container">
+            <!-- Tarjeta Historia -->
+            <article class="card" onclick="showSection('historia-detalle')">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=400&fit=crop" alt="Historia de los SO" class="card-image">
+                <div class="card-content">
+                    <i class="fas fa-history card-icon"></i>
+                    <h3>Historia de los SO</h3>
+                    <p>Desde los sistemas de lotes hasta la computación en la nube. Descubre la evolución completa.</p>
+                    <button class="btn-card">
+                        Explorar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Tarjeta Batch -->
+            <article class="card" onclick="showSection('batch-detalle')">
+                <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&h=400&fit=crop" alt="Lenguaje Batch" class="card-image">
+                <div class="card-content">
+                    <i class="fas fa-terminal card-icon"></i>
+                    <h3>Lenguaje Batch</h3>
+                    <p>Aprende desde lo básico hasta scripts avanzados de mantenimiento del sistema.</p>
+                    <button class="btn-card">
+                        Comenzar <i class="fas fa-code"></i>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Tarjeta Descargas -->
+            <article class="card" onclick="showSection('descargas-detalle')">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop" alt="Certificaciones" class="card-image">
+                <div class="card-content">
+                    <i class="fas fa-certificate card-icon"></i>
+                    <h3>Certificado & Recursos</h3>
+                    <p>Obtén tu certificado personalizado y descarga guías, scripts y juegos educativos.</p>
+                    <button class="btn-card">
+                        Descargar <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- ============================================
+         SECCIÓN HISTORIA DETALLE
+         ============================================ -->
+    <section id="historia-detalle" class="section-detail">
+        <button class="back-btn" onclick="showSection('inicio')">
+            <i class="fas fa-arrow-left"></i> Volver al inicio
+        </button>
+
+        <div class="section-header">
+            <h2><i class="fas fa-history" style="color: var(--naranja);"></i> Historia de los Sistemas Operativos</h2>
+            <p>Desde los primeros sistemas de lotes hasta la era moderna de la computación en la nube</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">1950s</div>
+                <div class="timeline-content">
+                    <h3>Sistemas de Lotes (Batch)</h3>
+                    <p>Los primeros sistemas operativos procesaban trabajos en grupos (lotes). Los usuarios entregaban tarjetas perforadas y esperaban horas o días por los resultados.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Procesamiento secuencial</li>
+                        <li>Sin interacción usuario-sistema</li>
+                        <li>Uso intensivo de tarjetas perforadas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1969</div>
+                <div class="timeline-content">
+                    <h3>Unix</h3>
+                    <p>Desarrollado en Bell Labs por Ken Thompson y Dennis Ritchie. Introdujo conceptos revolucionarios como el sistema de archivos jerárquico y la filosofía "todo es un archivo".</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Multiusuario y multitarea</li>
+                        <li>Shell y pipes</li>
+                        <li>Portabilidad del código</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1981</div>
+                <div class="timeline-content">
+                    <h3>MS-DOS</h3>
+                    <p>Microsoft Disk Operating System se convirtió en el estándar para PCs IBM. Interfaz de línea de comandos que sentó las bases del scripting batch moderno.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Interfaz CLI pura</li>
+                        <li>Sistema de archivos FAT</li>
+                        <li>Primeros archivos .bat</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1984-1991</div>
+                <div class="timeline-content">
+                    <h3>Mac OS y Windows</h3>
+                    <p>La revolución de las interfaces gráficas (GUI). Apple lanzó el Macintosh (1984) y Microsoft respondió con Windows 3.0 (1990) y el revolucionario Windows 95.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Interfaz gráfica intuitiva</li>
+                        <li>Multitarea cooperativa/preventiva</li>
+                        <li>Accesibilidad para masas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1991</div>
+                <div class="timeline-content">
+                    <h3>Linux</h3>
+                    <p>Linus Torvalds crea el kernel Linux. Sistema operativo libre y de código abierto que revolucionó servidores, embebidos y supercomputación.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Código abierto</li>
+                        <li>Altamente personalizable</li>
+                        <li>Dominio en servidores</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2000s+</div>
+                <div class="timeline-content">
+                    <h3>Cloud y Móvil</h3>
+                    <p>iOS (2007), Android (2008) y el auge de la computación en la nube. Los sistemas operativos se vuelven distribuidos, virtualizados y orientados a servicios.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Virtualización y contenedores</li>
+                        <li>Computación distribuida</li>
+                        <li>SO como servicio (SaaS)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN BATCH DETALLE (CON MODALES)
+         ============================================ -->
+    <section id="batch-detalle" class="section-detail">
+        <button class="back-btn" onclick="showSection('inicio')">
+            <i class="fas fa-arrow-left"></i> Volver al inicio
+        </button>
+
+        <div class="section-header">
+            <h2><i class="fas fa-terminal" style="color: var(--azul);"></i> Lenguaje Batch</h2>
+            <p>Domina la automatización en Windows desde lo básico hasta scripts profesionales de mantenimiento</p>
+        </div>
+
+        <div class="batch-levels">
+            <!-- Nivel Inicio -->
+            <div class="level-card" onclick="openModal('modal-inicio')">
+                <i class="fas fa-seedling level-icon"></i>
+                <span class="level-tag">NIVEL 1</span>
+                <h3>Inicio</h3>
+                <p>Fundamentos básicos: sintaxis, comandos esenciales, variables simples y estructuras básicas.</p>
+                <button class="btn-card" style="background: var(--azul); color: white; margin-top: 1rem;">
+                    Ver contenido <i class="fas fa-play"></i>
+                </button>
+            </div>
+
+            <!-- Nivel Intermedio -->
+            <div class="level-card intermedio" onclick="openModal('modal-intermedio')">
+                <i class="fas fa-layer-group level-icon"></i>
+                <span class="level-tag">NIVEL 2</span>
+                <h3>Intermedio</h3>
+                <p>Bucles avanzados, condicionales complejos, manipulación de archivos y funciones.</p>
+                <button class="btn-card" style="background: var(--naranja); color: white; margin-top: 1rem;">
+                    Ver contenido <i class="fas fa-play"></i>
+                </button>
+            </div>
+
+            <!-- Nivel Avanzado -->
+            <div class="level-card avanzado" onclick="openModal('modal-avanzado')">
+                <i class="fas fa-rocket level-icon"></i>
+                <span class="level-tag">NIVEL 3</span>
+                <h3>Avanzado</h3>
+                <p>Script completo de mantenimiento del sistema con explicación línea por línea.</p>
+                <button class="btn-card" style="background: var(--verde); color: #0a0a0a; margin-top: 1rem;">
+                    Ver contenido <i class="fas fa-play"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Enlace directo a sección avanzada -->
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--card-bg-claro); border-radius: var(--radius);">
+            <h3 style="margin-bottom: 1rem; color: var(--verde);">
+                <i class="fas fa-star"></i> ¿Quieres ir directo al script de mantenimiento completo?
+            </h3>
+            <p style="margin-bottom: 1.5rem;">Accede directamente a la explicación detallada línea por línea del script avanzado.</p>
+            <button class="btn-card" onclick="showSection('batch-avanzado-seccion')" style="background: var(--verde); color: #0a0a0a;">
+                <i class="fas fa-code"></i> Ver Script de Mantenimiento Completo
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================================
+         MODAL NIVEL INICIO
+         ============================================ -->
+    <div id="modal-inicio" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header inicio">
+                <h3><i class="fas fa-seedling"></i> Batch - Nivel Inicio</h3>
+                <button class="modal-close" onclick="closeModal('modal-inicio')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Fundamentos Básicos de Batch</h4>
+                <p>En este nivel aprenderás los conceptos esenciales para crear tus primeros scripts.</p>
+                
+                <h5 style="margin-top: 1.5rem; color: var(--azul);">1. Estructura básica</h5>
+                <div class="code-block">
+<span class="command">@echo</span> <span class="variable">off</span>
+<span class="command">title</span> <span class="string">"Mi Primer Script"</span>
+<span class="command">echo</span> <span class="string">"Hola Mundo"</span>
+<span class="command">pause</span>
+                </div>
+
+                <h5 style="margin-top: 1.5rem; color: var(--azul);">2. Variables Simples</h5>
+                <div class="code-block">
+<span class="command">set</span> <span class="variable">nombre</span>=<span class="string">"Juan"</span>
+<span class="command">echo</span> <span class="string">"Hola %nombre%"</span>
+<span class="command">set</span> /<span class="variable">p</span> <span class="variable">edad</span>=<span class="string">"Introduce tu edad: "</span>
+                </div>
+
+                <h5 style="margin-top: 1.5rem; color: var(--azul);">3. Comandos Esenciales</h5>
+                <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                    <li><code>echo</code> - Muestra mensajes</li>
+                    <li><code>cls</code> - Limpia la pantalla</li>
+                    <li><code>pause</code> - Espera tecla</li>
+                    <li><code>dir</code> - Lista archivos</li>
+                    <li><code>cd</code> - Cambia directorio</li>
+                </ul>
+
+                <a href="#batch-avanzado-seccion" class="btn-section-link" onclick="closeModal('modal-inicio'); showSection('batch-avanzado-seccion')">
+                    Ir al Script Avanzado <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         MODAL NIVEL INTERMEDIO
+         ============================================ -->
+    <div id="modal-intermedio" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header intermedio">
+                <h3><i class="fas fa-layer-group"></i> Batch - Nivel Intermedio</h3>
+                <button class="modal-close" onclick="closeModal('modal-intermedio')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Scripts Avanzados y Estructuras de Control</h4>
+                
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">1. Condicionales IF-ELSE</h5>
+                <div class="code-block">
+<span class="command">if</span> <span class="variable">%edad%</span> <span class="variable">geq</span> <span class="string">18</span> (
+    <span class="command">echo</span> <span class="string">"Eres mayor de edad"</span>
+) <span class="command">else</span> (
+    <span class="command">echo</span> <span class="string">"Eres menor de edad"</span>
+)
+
+<span class="command">if exist</span> <span class="string">"archivo.txt"</span> <span class="command">del</span> <span class="string">"archivo.txt"</span>
+                </div>
+
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">2. Bucles FOR</h5>
+                <div class="code-block">
+<span class="comment">:: Bucle numérico</span>
+<span class="command">for</span> /<span class="variable">L</span> <span class="variable">%%i</span> <span class="command">in</span> (<span class="string">1,1,10</span>) <span class="command">do</span> (
+    <span class="command">echo</span> <span class="string">"Iteración %%i"</span>
+)
+
+<span class="comment">:: Bucle en archivos</span>
+<span class="command">for</span> <span class="variable">%%f</span> <span class="command">in</span> (*.<span class="variable">txt</span>) <span class="command">do</span> (
+    <span class="command">echo</span> <span class="string">"Procesando: %%f"</span>
+)
+                </div>
+
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">3. Funciones (CALL)</h5>
+                <div class="code-block">
+<span class="command">call</span> :<span class="variable">funcion_saludo</span> <span class="string">"Juan"</span>
+<span class="command">goto</span> :<span class="variable">eof</span>
+
+:<span class="variable">funcion_saludo</span>
+<span class="command">echo</span> <span class="string">"Hola, %~1"</span>
+<span class="command">exit</span> /<span class="variable">b</span>
+                </div>
+
+                <a href="#batch-avanzado-seccion" class="btn-section-link" onclick="closeModal('modal-intermedio'); showSection('batch-avanzado-seccion')">
+                    Ir al Script Avanzado <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         MODAL NIVEL AVANZADO
+         ============================================ -->
+    <div id="modal-avanzado" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header avanzado">
+                <h3><i class="fas fa-rocket"></i> Batch - Nivel Avanzado</h3>
+                <button class="modal-close" onclick="closeModal('modal-avanzado')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Script Profesional de Mantenimiento del Sistema</h4>
+                <p>Este nivel incluye un script completo de mantenimiento con explicación detallada línea por línea.</p>
+                
+                <div style="background: rgba(57,255,20,0.1); border-left: 4px solid var(--verde); padding: 1rem; margin: 1rem 0; border-radius: 5px;">
+                    <h5 style="color: var(--verde); margin-bottom: 0.5rem;">
+                        <i class="fas fa-info-circle"></i> ¿Qué incluye?
+                    </h5>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Limpieza de archivos temporales</li>
+                        <li>Verificación de disco (CHKDSK)</li>
+                        <li>Reparación de sistema (SFC / DISM)</li>
+                        <li>Optimización de red</li>
+                        <li>Registro de actividades (logs)</li>
+                    </ul>
+                </div>
+
+                <a href="#batch-avanzado-seccion" class="btn-section-link" onclick="closeModal('modal-avanzado'); showSection('batch-avanzado-seccion')">
+                    Ver Explicación Línea por Línea <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         SECCIÓN BATCH AVANZADO (SCRIPT COMPLETO)
+         ============================================ -->
+    <section id="batch-avanzado-seccion" class="section-detail">
+        <button class="back-btn" onclick="showSection('batch-detalle')">
+            <i class="fas fa-arrow-left"></i> Volver a Batch
+        </button>
+
+        <div class="section-header">
+            <h2><i class="fas fa-tools" style="color: var(--verde);"></i> Script de Mantenimiento Avanzado</h2>
+            <p>Análisis completo línea por línea de un script profesional de mantenimiento de Windows</p>
+        </div>
+
+        <div style="background: var(--card-bg-claro); padding: 2rem; border-radius: var(--radius); margin-bottom: 2rem;">
+            <h3 style="color: var(--verde); margin-bottom: 1.5rem;">
+                <i class="fas fa-file-code"></i> Script Completo: Mantenimiento_Windows.bat
+            </h3>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 1</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">@echo</span> <span class="variable">off</span>
+                </div>
+                <p class="line-desc">
+                    <strong>@</strong> - Oculta la visualización del comando mismo.<br>
+                    <strong>echo off</strong> - Desactiva la visualización de todos los comandos subsiguientes, manteniendo la salida limpia para el usuario.
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 2</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">setlocal</span> <span class="variable">EnableDelayedExpansion</span>
+                </div>
+                <p class="line-desc">
+                    <strong>setlocal</strong> - Inicia un entorno local para variables (se restauran al finalizar).<br>
+                    <strong>EnableDelayedExpansion</strong> - Permite usar variables dentro de bucles con sintaxis !variable! en lugar de %variable%, evaluándose en tiempo de ejecución, no de parseo.
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 3-4</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">title</span> <span class="string">"Mantenimiento del Sistema v2.0"</span>
+<span class="command">color</span> <span class="string">0A</span>
+                </div>
+                <p class="line-desc">
+                    <strong>title</strong> - Establece el título de la ventana de la consola.<br>
+                    <strong>color 0A</strong> - Cambia los colores: 0 = fondo negro, A = texto verde brillante (estilo Matrix/profesional).
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 5-8</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">set</span> <span class="string">"logFile=%temp%\Mantenimiento_%date:~-4,4%%date:~-10,2%%date:~-7,2%.log"</span>
+<span class="command">echo</span> <span class="string">"========================================"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+<span class="command">echo</span> <span class="string">"Inicio de mantenimiento: %date% %time%"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+<span class="command">echo</span> <span class="string">"========================================"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+                </div>
+                <p class="line-desc">
+                    <strong>set "logFile=..."</strong> - Define ruta del archivo log en %temp% con fecha en nombre (YYYYMMDD).<br>
+                    <strong>%date:~-4,4%</strong> - Manipulación de substring: extrae 4 caracteres empezando desde el final-4 (año).<br>
+                    <strong>>></strong> - Redirección de salida: append (añade al final sin sobrescribir).
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 9-15</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">echo</span> <span class="string">"[1/5] Limpiando archivos temporales..."</span>
+<span class="command">del</span> /<span class="variable">q</span> /<span class="variable">f</span> /<span class="variable">s</span> <span class="variable">%temp%</span>\<span class="string">*</span>.<span class="variable">tmp</span> <span class="string">2>nul</span>
+<span class="command">del</span> /<span class="variable">q</span> /<span class="variable">f</span> /<span class="variable">s</span> <span class="variable">%windir%</span>\<span class="string">temp\*</span>.<span class="string">*</span> <span class="string">2>nul</span>
+<span class="command">echo</span> <span class="string">"Limpieza completada"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+                </div>
+                <p class="line-desc">
+                    <strong>del /q /f /s</strong> - Elimina archivos: /q (quiet, sin confirmar), /f (force, archivos protegidos), /s (subdirectorios).<br>
+                    <strong>2>nul</strong> - Redirige errores (stderr, stream 2) a nul (dispositulo nulo), ocultando mensajes de error.<br>
+                    <strong>%windir%</strong> - Variable de entorno que apunta a C:\Windows.
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 16-24</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">echo</span> <span class="string">"[2/5] Verificando integridad del disco..."</span>
+<span class="command">echo</span> <span class="string">"y"</span> | <span class="command">chkdsk</span> <span class="variable">C:</span> /<span class="variable">f</span> /<span class="variable">scan</span>
+<span class="command">if</span> <span class="variable">%errorlevel%</span> <span class="variable">equ</span> <span class="string">0</span> (
+    <span class="command">echo</span> <span class="string">"Disco OK"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+) <span class="command">else</span> (
+    <span class="command">echo</span> <span class="string">"ADVERTENCIA: Errores encontrados"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+)
+                </div>
+                <p class="line-desc">
+                    <strong>echo "y" |</strong> - Pipe: envía "y" como respuesta automática al comando chkdsk (confirma operación).<br>
+                    <strong>chkdsk C: /f /scan</strong> - Verifica disco C: /f (corrige errores), /scan (escaneo online sin desmontar).<br>
+                    <strong>%errorlevel%</strong> - Variable automática con código de retorno del último comando (0 = éxito).
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 25-35</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">echo</span> <span class="string">"[3/5] Escaneando archivos del sistema..."</span>
+<span class="command">sfc</span> /<span class="variable">scannow</span> > <span class="string">"%temp%\sfc_output.txt"</span>
+<span class="command">findstr</span> /<span class="variable">c</span>:<span class="string">"no encontró"</span> <span class="string">"%temp%\sfc_output.txt"</span> > <span class="variable">nul</span>
+<span class="command">if</span> <span class="variable">%errorlevel%</span> <span class="variable">equ</span> <span class="string">0</span> (
+    <span class="command">echo</span> <span class="string">"SFC: No se encontraron violaciones"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+) <span class="command">else</span> (
+    <span class="command">echo</span> <span class="string">"[4/5] Reparando imagen del sistema con DISM..."</span>
+    <span class="command">DISM</span> /<span class="variable">Online</span> /<span class="variable">Cleanup-Image</span> /<span class="variable">RestoreHealth</span>
+)
+                </div>
+                <p class="line-desc">
+                    <strong>sfc /scannow</strong> - System File Checker: escanea y repara archivos protegidos del sistema.<br>
+                    <strong>findstr /c:"texto"</strong> - Busca cadena literal en archivo. Si encuentra, errorlevel=0.<br>
+                    <strong>DISM</strong> - Deployment Image Servicing and Management: repara la imagen de Windows usando Windows Update.
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <span class="line-number">Línea 36-45</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+<span class="command">echo</span> <span class="string">"[5/5] Optimizando configuracion de red..."</span>
+<span class="command">ipconfig</span> /<span class="variable">flushdns</span>
+<span class="command">ipconfig</span> /<span class="variable">release</span>
+<span class="command">ipconfig</span> /<span class="variable">renew</span>
+<span class="command">echo</span> <span class="string">"Red optimizada"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+
+<span class="command">echo</span> <span class="string">"========================================"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+<span class="command">echo</span> <span class="string">"Mantenimiento completado: %date% %time%"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+<span class="command">echo</span> <span class="string">"Log guardado en: %logFile%"</span>
+<span class="command">pause</span>
+                </div>
+                <p class="line-desc">
+                    <strong>ipconfig /flushdns</strong> - Vacía caché DNS resolviendo problemas de resolución de nombres.<br>
+                    <strong>/release y /renew</strong> - Libera y renueva la configuración IP DHCP.<br>
+                    <strong>pause</strong> - Espera pulsación de tecla antes de cerrar, permitiendo ver resultados.
+                </p>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,123,0,0.1); border-radius: 10px; border-left: 4px solid var(--naranja);">
+                <h4 style="color: var(--naranja); margin-bottom: 1rem;">
+                    <i class="fas fa-lightbulb"></i> Conceptos Clave Aprendidos
+                </h4>
+                <ul style="padding-left: 1.5rem; line-height: 2;">
+                    <li><strong>Redirección:</strong> > (sobrescribir), >> (añadir), 2>nul (ocultar errores)</li>
+                    <li><strong>Pipes:</strong> | (pasar salida a entrada de otro comando)</li>
+                    <li><strong>Variables de entorno:</strong> %temp%, %windir%, %date%, %time%</li>
+                    <li><strong>Control de flujo:</strong> if/else, errorlevel, goto</li>
+                    <li><strong>Logging:</strong> Técnica esencial para scripts de producción</li>
+                </ul>
+            </div>
+
+            <button class="btn-download" onclick="simularDescarga('Mantenimiento_Windows.bat')" style="margin-top: 2rem;">
+                <i class="fas fa-download"></i> Descargar Script Completo
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN DESCARGAS
+         ============================================ -->
+    <section id="descargas-detalle" class="section-detail">
+        <button class="back-btn" onclick="showSection('inicio')">
+            <i class="fas fa-arrow-left"></i> Volver al inicio
+        </button>
+
+        <div class="section-header">
+            <h2><i class="fas fa-download" style="color: var(--verde);"></i> Centro de Descargas</h2>
+            <p>Recursos educativos, scripts listos para usar y tu certificado personalizado</p>
+        </div>
+
+        <div class="downloads-grid">
+            <div class="download-card">
+                <i class="fas fa-file-pdf download-icon"></i>
+                <h3>Guía Completa PDF</h3>
+                <p>Manual de 50+ páginas con todos los comandos Batch, historia de SO y mejores prácticas.</p>
+                <button class="btn-download" onclick="simularDescarga('Guia_Completa.pdf')">
+                    <i class="fas fa-download"></i> Descargar PDF
+                </button>
+            </div>
+
+            <div class="download-card">
+                <i class="fas fa-gamepad download-icon"></i>
+                <h3>Juego Educativo</h3>
+                <p>Quiz interactivo para practicar comandos Batch. ¡Compite por la mejor puntuación!</p>
+                <button class="btn-download" onclick="simularDescarga('Quiz_Batch.exe')">
+                    <i class="fas fa-play"></i> Jugar Ahora
+                </button>
+            </div>
+
+            <div class="download-card">
+                <i class="fas fa-clipboard-list download-icon"></i>
+                <h3>Cheat Sheet</h3>
+                <p>Referencia rápida de comandos Batch para imprimir y tener siempre a mano.</p>
+                <button class="btn-download" onclick="simularDescarga('Batch_Cheatsheet.pdf')">
+                    <i class="fas fa-download"></i> Descargar
+                </button>
+            </div>
+        </div>
+
+        <!-- Certificado Interactivo -->
+        <div class="certificado-container">
+            <h3 style="margin-bottom: 1rem; font-size: 1.8rem;">
+                <i class="fas fa-award" style="color: var(--naranja);"></i>
+                Obtén tu Certificado
+            </h3>
+            <p style="margin-bottom: 2rem; opacity: 0.9;">
+                Has completado el curso de Historia de SO y Lenguaje Batch. 
+                Genera tu certificado personalizado ahora.
+            </p>
+            
+            <button class="btn-certificado" onclick="generarCertificado()">
+                <i class="fas fa-certificate"></i> Generar Certificado
+            </button>
+
+            <div id="certificado-display" class="certificado-display">
+                <div class="certificado-titulo">
+                    <i class="fas fa-award"></i> CERTIFICADO DE COMPLETITUD
+                </div>
+                <p style="font-size: 1.1rem;">Se otorga el presente certificado a:</p>
+                <div id="cert-nombre" class="certificado-nombre"></div>
+                <p style="margin: 1rem 0;">
+                    Por haber completado satisfactoriamente el curso<br>
+                    <strong>"Historia de Sistemas Operativos y Lenguaje Batch"</strong>
+                </p>
+                <p style="margin-top: 1rem;">
+                    <i class="fas fa-check-circle" style="color: var(--verde);"></i> 
+                    Nivel: Básico a Avanzado<br>
+                    <i class="fas fa-clock" style="color: var(--azul);"></i> 
+                    Duración: 20 horas
+                </p>
+                <div class="certificado-fecha">
+                    Fecha de emisión: <span id="cert-fecha"></span>
+                </div>
+                <button class="btn-download" onclick="simularDescarga('Certificado.pdf')" style="margin-top: 2rem;">
+                    <i class="fas fa-download"></i> Descargar Certificado
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer>
+        <p>&copy; 2024 SO & Batch Master. Curso educativo interactivo.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7; font-size: 0.9rem;">
+            <i class="fas fa-code"></i> Desarrollado con HTML5, CSS3 y JavaScript Vanilla
+        </p>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT
+         ============================================ -->
+    <script>
+        // ============================================
+        // GESTIÓN DE SECCIONES
+        // ============================================
+        
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.section-detail').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Ocultar/mostrar inicio
+            const inicio = document.getElementById('inicio');
+            if (sectionId === 'inicio') {
+                inicio.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                inicio.style.display = 'none';
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+            
+            // Actualizar navegación activa
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Cerrar menú móvil si está abierto
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        // ============================================
+        // GESTIÓN DE MODALES
+        // ============================================
+        
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restaurar scroll
+            }
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target === event.currentTarget) {
+                closeModal(event.target.id);
+            }
+        }
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    closeModal(modal.id);
+                });
+            }
+        });
+
+        // ============================================
+        // TEMA CLARO/OSCURO
+        // ============================================
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        // Cargar tema guardado al iniciar
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const icon = document.getElementById('themeIcon');
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        // ============================================
+        // MENÚ MÓVIL
+        // ============================================
+        
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // ============================================
+        // CERTIFICADO INTERACTIVO
+        // ============================================
+        
+        function generarCertificado() {
+            const nombre = prompt('¡Felicidades! 🎉\n\nIntroduce tu nombre completo para generar el certificado:');
+            
+            if (nombre && nombre.trim() !== '') {
+                const certDisplay = document.getElementById('certificado-display');
+                const certNombre = document.getElementById('cert-nombre');
+                const certFecha = document.getElementById('cert-fecha');
+                
+                certNombre.textContent = nombre.trim();
+                certFecha.textContent = new Date().toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                certDisplay.style.display = 'block';
+                certDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Efecto de confeti simulado con console log (en producción usar librería)
+                console.log('🎉 Certificado generado para:', nombre);
+            } else if (nombre !== null) {
+                // Usuario introdujo texto vacío
+                alert('Por favor, introduce un nombre válido para generar el certificado.');
+            }
+            // Si nombre es null, usuario canceló el prompt - no hacer nada
+        }
+
+        // ============================================
+        // SIMULACIÓN DE DESCARGAS
+        // ============================================
+        
+        function simularDescarga(nombreArchivo) {
+            // Crear notificación visual en lugar de alert
+            const notificacion = document.createElement('div');
+            notificacion.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, var(--verde), #2acc10);
+                color: #0a0a0a;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 3000;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                font-weight: 600;
+                animation: slideInRight 0.3s ease;
+            `;
+            notificacion.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>Descargando ${nombreArchivo}...</span>
+            `;
+            
+            document.body.appendChild(notificacion);
+            
+            // Remover después de 3 segundos
+            setTimeout(() => {
+                notificacion.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notificacion.remove(), 300);
+            }, 3000);
+        }
+
+        // Animaciones para notificaciones
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            
+            // Animación de entrada para tarjetas al hacer scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.card, .timeline-item').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Prevenir errores de consola por elementos no encontrados
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.log('Error capturado (no crítico):', msg);
+            return false;
+        };
+    </script>
+</body>
+</html>
