@@ -92,6 +92,8 @@
         }
 
         .nav-links a {
+            cursor: pointer;
+            white-space: nowrap;
             color: white;
             text-decoration: none;
             font-weight: 500;
@@ -914,6 +916,72 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #ff9500;
         }
+        /* ======================
+   QUIZ PRO STYLE
+====================== */
+
+.quiz-card {
+    background: var(--card-bg-claro);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+}
+
+.quiz-question {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-options button {
+    width: 100%;
+    margin: 0.6rem 0;
+    padding: 0.9rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--azul);
+    color: white;
+    transition: 0.25s;
+}
+
+.quiz-options button:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.quiz-correct {
+    background: var(--verde) !important;
+}
+
+.quiz-wrong {
+    background: #ff4d4d !important;
+    color: white;
+}
+
+.quiz-progress {
+    height: 8px;
+    background: #ddd;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.quiz-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--azul), var(--verde));
+    width: 0%;
+    transition: 0.4s;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(10px);}
+    to { opacity:1; transform:translateY(0);}
+}
+
     </style>
 </head>
 <body>
@@ -927,15 +995,13 @@
                 <i class="fas fa-graduation-cap"></i>
                 <span>SO & Batch Master</span>
             </div>
-            
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#inicio" class="nav-link active" onclick="showSection('inicio')">Inicio</a></li>
-                <li><a href="#historia" class="nav-link" onclick="showSection('historia-detalle')">Historia SO</a></li>
-                <li><a href="#batch" class="nav-link" onclick="showSection('batch-detalle')">Lenguaje Batch</a></li>
-                <li><a href="#descargas" class="nav-link" onclick="showSection('descargas-detalle')">Descargas</a></li>
+            <ul class="nav-links">
+                <li><a onclick="showSection('inicio')">Inicio</a></li>
+                <li><a onclick="showSection('historia-detalle')">Historia SO</a></li>
+                <li><a onclick="showSection('batch-detalle')">Lenguaje Batch</a></li>
+                <li><a onclick="showSection('descargas-detalle')">Descargas</a></li>
                 <li><a onclick="showSection('quiz-detalle')">Quiz</a></li>
-
-
+                <li><a onclick="showSection('batexe-detalle')">BAT → EXE</a></li>
             </ul>
 
             <div class="nav-controls">
@@ -1605,24 +1671,91 @@ netstat -ano > conexiones.txt
                 </button>
             </div>
         </div>
-        <!-- ================= QUIZ NUEVO ================= -->
+    </section>
+  <!-- FIN DESCARGAS -->
+   <!-- =====================================================
+     SECCIÓN BAT → EXE
+===================================================== -->
 
-    <section id="quiz-detalle" class="section-detail">
+<section id="batexe-detalle" class="section-detail">
 
-        <button class="back-btn" onclick="showSection('inicio')">
-            ← Volver
-        </button>
+    <button class="back-btn" onclick="showSection('inicio')">
+        <i class="fas fa-arrow-left"></i> Volver
+    </button>
 
-        <div class="section-header">
-        <h2>🧠 Quiz Batch</h2>
-        <p>Pon a prueba tus conocimientos</p>
+    <div class="section-header">
+        <h2>
+            <i class="fas fa-cogs" style="color: var(--azul);"></i>
+            Convertir BAT a EXE
+        </h2>
+        <p>Cómo transformar tu script Batch en un ejecutable profesional (.exe)</p>
+    </div>
+
+    <!-- imágenes explicativas -->
+    
+::contentReference[oaicite:0]{index=0}
+
+
+    <div class="card" style="max-width:800px;margin:auto;padding:2rem;">
+
+        <h3 style="margin-bottom:1rem;">¿Para qué sirve convertir a EXE?</h3>
+
+        <ul style="margin-bottom:2rem;">
+            <li>✔ Ejecutar el script como programa normal</li>
+            <li>✔ Ocultar el código .bat</li>
+            <li>✔ Más profesional para entregar o distribuir</li>
+            <li>✔ Evitar que el usuario modifique el script</li>
+        </ul>
+
+
+        <h3 style="margin-bottom:1rem;">Pasos para convertirlo</h3>
+
+        <ol style="line-height:2;">
+            <li>Descargar <strong>Bat To Exe Converter</strong></li>
+            <li>Abrir el archivo <code>MantenimientoV2.bat</code></li>
+            <li>Pulsar <strong>Compile</strong></li>
+            <li>Se generará automáticamente un archivo <code>.exe</code></li>
+        </ol>
+
+
+        <div class="code-block" style="margin-top:2rem;">
+MantenimientoV2.bat  →  MantenimientoV2.exe
         </div>
-         <div style="max-width:600px;margin:auto;background:var(--card-bg-claro);padding:2rem;border-radius:20px;text-align:center;">
-        <div id="quiz-box"></div>
+
+        <p style="margin-top:2rem;">
+        💡 <strong>Consejo:</strong> usa el .exe cuando entregues el proyecto para que el usuario
+        solo tenga que hacer doble clic sin ver la consola de comandos.
+        </p>
+
     </div>
 
 </section>
 
+
+<!-- ================= QUIZ ================= -->
+
+<section id="quiz-detalle" class="section-detail">
+
+    <button class="back-btn" onclick="showSection('inicio')">
+        ← Volver
+    </button>
+
+    <div class="section-header">
+        <h2>🧠 Quiz Batch</h2>
+        <p>Pon a prueba tus conocimientos</p>
+    </div>
+
+    <div style="max-width:650px;margin:auto;">
+        <div class="quiz-card">
+            <div class="quiz-progress">
+                <div id="quiz-progress-bar" class="quiz-progress-bar"></div>
+            </div>
+
+        <div id="quiz-box"></div>
+    </div>
+    </div>
+</section>
+    
     <!-- ============================================
          FOOTER
          ============================================ -->
@@ -1868,7 +2001,9 @@ netstat -ano > conexiones.txt
             return false;
         };
 
-        /* ===== QUIZ ===== */
+        /* ======================
+   QUIZ PRO
+====================== */
 
 const quizQuestions = [
 {
@@ -1885,6 +2020,11 @@ const quizQuestions = [
     q: "¿Para qué sirve netstat?",
     options: ["Ver conexiones de red", "Formatear disco", "Crear carpetas"],
     correct: 0
+},
+{
+    q: "¿Qué instrucción ejecuta otro script?",
+    options: ["goto", "call", "echo"],
+    correct: 1
 }
 ];
 
@@ -1892,30 +2032,64 @@ let quizIndex = 0;
 let quizScore = 0;
 
 function loadQuiz() {
+
     const box = document.getElementById("quiz-box");
+    const progress = document.getElementById("quiz-progress-bar");
+
     if(!box) return;
 
     if(quizIndex >= quizQuestions.length){
-        box.innerHTML = `
-            <h3>Resultado: ${quizScore}/${quizQuestions.length}</h3>
-            <button class="btn-card" onclick="restartQuiz()">Reintentar</button>
-        `;
+        showResult();
         return;
     }
 
     const q = quizQuestions[quizIndex];
 
+    progress.style.width = ((quizIndex / quizQuestions.length) * 100) + "%";
+
     box.innerHTML = `
-        <h3>${q.q}</h3>
-        ${q.options.map((o,i)=>`<button class="btn-card" onclick="answerQuiz(${i})">${o}</button>`).join("")}
-        <p>Pregunta ${quizIndex+1}/${quizQuestions.length}</p>
+        <div class="quiz-question">${q.q}</div>
+        <div class="quiz-options">
+            ${q.options.map((o,i)=>`<button onclick="answerQuiz(${i})">${o}</button>`).join("")}
+        </div>
+        <p style="margin-top:1rem;">Pregunta ${quizIndex+1}/${quizQuestions.length}</p>
     `;
 }
 
 function answerQuiz(i){
-    if(i === quizQuestions[quizIndex].correct) quizScore++;
-    quizIndex++;
-    loadQuiz();
+
+    const buttons = document.querySelectorAll(".quiz-options button");
+
+    buttons.forEach(b => b.disabled = true);
+
+    if(i === quizQuestions[quizIndex].correct){
+        buttons[i].classList.add("quiz-correct");
+        quizScore++;
+    } else {
+        buttons[i].classList.add("quiz-wrong");
+        buttons[quizQuestions[quizIndex].correct].classList.add("quiz-correct");
+    }
+
+    setTimeout(() => {
+        quizIndex++;
+        loadQuiz();
+    }, 700);
+}
+
+function showResult(){
+
+    const box = document.getElementById("quiz-box");
+    const percent = Math.round((quizScore / quizQuestions.length)*100);
+
+    let color = "var(--azul)";
+    if(percent >= 80) color = "var(--verde)";
+    if(percent < 50) color = "#ff4d4d";
+
+    box.innerHTML = `
+        <h2 style="color:${color}">Resultado final</h2>
+        <h3>${quizScore}/${quizQuestions.length} (${percent}%)</h3>
+        <button class="btn-card" onclick="restartQuiz()">Reintentar</button>
+    `;
 }
 
 function restartQuiz(){
