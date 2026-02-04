@@ -2,9 +2,9 @@
 title Mantenimiento PC v2
 color 0A
 
-:: ==============================
+:: ======================================
 :: LOG DE INICIO
-:: ==============================
+:: ======================================
 echo ===== INICIO MANTENIMIENTO ===== >> log.txt
 date /t >> log.txt
 time /t >> log.txt
@@ -21,16 +21,17 @@ echo 1. Limpiar archivos temporales
 echo 2. Scanner del sistema (SFC)
 echo 3. Reparar red (ipconfig)
 echo 4. Ver conexiones activas (netstat)
-echo 5. Salir
+echo 5. Reparacion avanzada del sistema (DISM)
+echo 6. Salir
 echo.
 echo ======================================
 
-set /p op=Elige una opcion: 
+set /p op=Elige una opcion:
 
 
-:: ==============================
+:: ======================================
 :: OPCION 1 - LIMPIEZA TEMPORALES
-:: ==============================
+:: ======================================
 if "%op%"=="1" (
     echo Limpieza de temporales ejecutada >> log.txt
 
@@ -44,9 +45,9 @@ if "%op%"=="1" (
 )
 
 
-:: ==============================
-:: OPCION 2 - SCANNER
-:: ==============================
+:: ======================================
+:: OPCION 2 - SCANNER (SFC)
+:: ======================================
 if "%op%"=="2" (
     echo Scanner SFC ejecutado >> log.txt
 
@@ -58,9 +59,9 @@ if "%op%"=="2" (
 )
 
 
-:: ==============================
+:: ======================================
 :: OPCION 3 - RED
-:: ==============================
+:: ======================================
 if "%op%"=="3" (
     echo Reparacion de red ejecutada >> log.txt
 
@@ -76,9 +77,9 @@ if "%op%"=="3" (
 )
 
 
-:: ==============================
+:: ======================================
 :: OPCION 4 - NETSTAT
-:: ==============================
+:: ======================================
 if "%op%"=="4" (
     echo Netstat ejecutado >> log.txt
 
@@ -92,10 +93,27 @@ if "%op%"=="4" (
 )
 
 
-:: ==============================
-:: OPCION 5 - SALIR
-:: ==============================
+:: ======================================
+:: OPCION 5 - DISM (REPARACION AVANZADA)
+:: ======================================
 if "%op%"=="5" (
+    echo DISM ejecutado >> log.txt
+
+    echo.
+    echo Reparando imagen del sistema...
+    echo Este proceso puede tardar varios minutos...
+    DISM /Online /Cleanup-Image /RestoreHealth
+
+    echo Reparacion DISM completada.
+    pause
+    goto menu
+)
+
+
+:: ======================================
+:: OPCION 6 - SALIR
+:: ======================================
+if "%op%"=="6" (
     echo ===== FIN DEL PROGRAMA ===== >> log.txt
     echo.
     echo Cerrando programa...
@@ -103,9 +121,9 @@ if "%op%"=="5" (
 )
 
 
-:: ==============================
+:: ======================================
 :: OPCION INVALIDA
-:: ==============================
+:: ======================================
 echo.
 echo Opcion no valida.
 pause
