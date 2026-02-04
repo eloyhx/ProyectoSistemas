@@ -933,6 +933,9 @@
                 <li><a href="#historia" class="nav-link" onclick="showSection('historia-detalle')">Historia SO</a></li>
                 <li><a href="#batch" class="nav-link" onclick="showSection('batch-detalle')">Lenguaje Batch</a></li>
                 <li><a href="#descargas" class="nav-link" onclick="showSection('descargas-detalle')">Descargas</a></li>
+                <li><a onclick="showSection('quiz-detalle')">Quiz</a></li>
+
+
             </ul>
 
             <div class="nav-controls">
@@ -1140,6 +1143,57 @@
                 </button>
             </div>
         </div>
+        <!-- =========================
+     EXPLICACIÓN DEL MENÚ
+     ========================= -->
+
+<div style="margin-top:3rem; background: var(--card-bg-claro); padding:2rem; border-radius: var(--radius);">
+
+    <h3 style="color: var(--azul);">
+        <i class="fas fa-list"></i> Menú del script de mantenimiento
+    </h3>
+
+    <p>
+    El archivo <strong>MantenimientoV2.bat</strong> incluye un menú interactivo
+    donde el usuario puede elegir qué tarea ejecutar. Utilizamos
+    <code>set /p</code> para leer la opción y <code>call</code> para ejecutar otros scripts
+    como Scanner.bat.
+    </p>
+
+    <div class="code-block">
+@echo off
+:menu
+echo 1 Limpieza
+echo 2 Scanner
+set /p op=
+if "%op%"=="2" call Scanner.bat
+    </div>
+
+</div>
+
+
+<!-- =========================
+     NETSTAT
+     ========================= -->
+
+<div style="margin-top:2rem; background: var(--card-bg-claro); padding:2rem; border-radius: var(--radius);">
+
+    <h3 style="color: var(--verde);">
+        <i class="fas fa-network-wired"></i> Uso de Netstat
+    </h3>
+
+    <p>
+    El comando <code>netstat -ano</code> muestra todas las conexiones activas del equipo.
+    Es útil para detectar programas sospechosos o problemas de red.
+    Guardamos el resultado en un archivo:
+    </p>
+
+    <div class="code-block">
+netstat -ano > conexiones.txt
+    </div>
+
+</div>
+
 
         <!-- Enlace directo a sección avanzada -->
         <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--card-bg-claro); border-radius: var(--radius);">
@@ -1192,8 +1246,8 @@
                     <li><code>cd</code> - Cambia directorio</li>
                 </ul>
 
-                <a href="#batch-avanzado-seccion" class="btn-section-link" onclick="closeModal('modal-inicio'); showSection('batch-avanzado-seccion')">
-                    Ir al Script Avanzado <i class="fas fa-arrow-right"></i>
+                <a href="#batch-intermedio-seccion" class="btn-section-link" onclick="closeModal('modal-inicio'); showSection('modal-intermedio')">
+                    Ir al Script Intermedio <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
@@ -1471,6 +1525,27 @@
                     <i class="fas fa-download"></i> Descargar PDF
                 </button>
             </div>
+            </div>  <!-- cierre del PDF -->
+
+            <!-- NUEVA TARJETA BAT -->
+            <div class="download-card">
+            <i class="fas fa-terminal download-icon"></i>
+            <h3>Script de Mantenimiento (.bat)</h3>
+            <p>Archivo Batch real con menú interactivo de mantenimiento del sistema.</p>
+            <a href="files/MantenimientoV2.bat" download class="btn-download">
+                <i class="fas fa-download"></i> Descargar BAT
+             </a>
+            </div>
+
+            <div class="download-card">
+            <i class="fas fa-search download-icon"></i>
+            <h3>Scanner.bat</h3>
+            <p>Script independiente que verifica y repara archivos del sistema usando SFC.</p>
+            <a href="files/scanner.bat" download class="btn-download">
+                    <i class="fas fa-download"></i> Descargar Scanner
+            </a>
+            </div>
+        </div>
 
             <div class="download-card">
                 <i class="fas fa-gamepad download-icon"></i>
@@ -1530,7 +1605,23 @@
                 </button>
             </div>
         </div>
-    </section>
+        <!-- ================= QUIZ NUEVO ================= -->
+
+    <section id="quiz-detalle" class="section-detail">
+
+        <button class="back-btn" onclick="showSection('inicio')">
+            ← Volver
+        </button>
+
+        <div class="section-header">
+        <h2>🧠 Quiz Batch</h2>
+        <p>Pon a prueba tus conocimientos</p>
+        </div>
+         <div style="max-width:600px;margin:auto;background:var(--card-bg-claro);padding:2rem;border-radius:20px;text-align:center;">
+        <div id="quiz-box"></div>
+    </div>
+
+</section>
 
     <!-- ============================================
          FOOTER
@@ -1555,6 +1646,8 @@
             document.querySelectorAll('.section-detail').forEach(section => {
                 section.classList.remove('active');
             });
+
+            
             
             // Ocultar/mostrar inicio
             const inicio = document.getElementById('inicio');
@@ -1566,6 +1659,7 @@
                 const targetSection = document.getElementById(sectionId);
                 if (targetSection) {
                     targetSection.classList.add('active');
+                    if(sectionId === 'quiz-detalle') loadQuiz();
                     targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }
@@ -1773,6 +1867,63 @@
             console.log('Error capturado (no crítico):', msg);
             return false;
         };
+
+        /* ===== QUIZ ===== */
+
+const quizQuestions = [
+{
+    q: "¿Qué hace echo off?",
+    options: ["Oculta los comandos", "Borra archivos", "Reinicia Windows"],
+    correct: 0
+},
+{
+    q: "¿Qué comando repara archivos del sistema?",
+    options: ["dir", "sfc /scannow", "netstat"],
+    correct: 1
+},
+{
+    q: "¿Para qué sirve netstat?",
+    options: ["Ver conexiones de red", "Formatear disco", "Crear carpetas"],
+    correct: 0
+}
+];
+
+let quizIndex = 0;
+let quizScore = 0;
+
+function loadQuiz() {
+    const box = document.getElementById("quiz-box");
+    if(!box) return;
+
+    if(quizIndex >= quizQuestions.length){
+        box.innerHTML = `
+            <h3>Resultado: ${quizScore}/${quizQuestions.length}</h3>
+            <button class="btn-card" onclick="restartQuiz()">Reintentar</button>
+        `;
+        return;
+    }
+
+    const q = quizQuestions[quizIndex];
+
+    box.innerHTML = `
+        <h3>${q.q}</h3>
+        ${q.options.map((o,i)=>`<button class="btn-card" onclick="answerQuiz(${i})">${o}</button>`).join("")}
+        <p>Pregunta ${quizIndex+1}/${quizQuestions.length}</p>
+    `;
+}
+
+function answerQuiz(i){
+    if(i === quizQuestions[quizIndex].correct) quizScore++;
+    quizIndex++;
+    loadQuiz();
+}
+
+function restartQuiz(){
+    quizIndex = 0;
+    quizScore = 0;
+    loadQuiz();
+}
+
     </script>
 </body>
 </html>
