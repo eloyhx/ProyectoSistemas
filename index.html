@@ -19,12 +19,12 @@
                 <span>SO & Batch Master</span>
             </div>
             <ul class="nav-links">
-                <li><a onclick="showSection('inicio')">Inicio</a></li>
-                <li><a onclick="showSection('historia-detalle')">Historia SO</a></li>
-                <li><a onclick="showSection('batch-detalle')">Lenguaje Batch</a></li>
-                <li><a onclick="showSection('descargas-detalle')">Descargas</a></li>
-                <li><a onclick="showSection('quiz-detalle')">Quiz</a></li>
-                <li><a onclick="showSection('batexe-detalle')">BAT → EXE</a></li>
+                <li><a class="nav-link" onclick="showSection('inicio')">Inicio</a></li>
+                <li><a class="nav-link" onclick="showSection('historia-detalle')">Historia SO</a></li>
+                <li><a class="nav-link" onclick="showSection('batch-detalle')">Lenguaje Batch</a></li>
+                <li><a class="nav-link" onclick="showSection('descargas-detalle')">Descargas</a></li>
+                <li><a class="nav-link" onclick="showSection('quiz-detalle')">Quiz</a></li>
+                <li><a class="nav-link" onclick="showSection('batexe-detalle')">BAT → EXE</a></li>
             </ul>
 
             <div class="nav-controls">
@@ -596,167 +596,119 @@ netstat -ano > conexiones.txt
          SECCIÓN DESCARGAS
          ============================================ -->
     <section id="descargas-detalle" class="section-detail">
-        <button class="back-btn" onclick="showSection('inicio')">
-            <i class="fas fa-arrow-left"></i> Volver al inicio
-        </button>
 
-        <div class="section-header">
-            <h2><i class="fas fa-download" style="color: var(--verde);"></i> Centro de Descargas</h2>
-            <p>Recursos educativos, scripts listos para usar y tu certificado personalizado</p>
+    <button class="back-btn" onclick="showSection('inicio')">
+        <i class="fas fa-arrow-left"></i> Volver al inicio
+    </button>
+
+    <div class="section-header">
+        <h2><i class="fas fa-download" style="color: var(--verde);"></i> Centro de Descargas</h2>
+        <p>Recursos educativos, scripts listos para usar y tu certificado personalizado</p>
+    </div>
+
+
+    <!-- ================= GRID DESCARGAS ================= -->
+    <div class="downloads-grid">
+
+        <!-- PDF -->
+        <div class="download-card">
+            <i class="fas fa-file-pdf download-icon"></i>
+            <h3>Guía Completa PDF</h3>
+            <p>Manual de 50+ páginas con todos los comandos Batch.</p>
+            <button class="btn-download" onclick="simularDescarga('Guia_Completa.pdf')">
+                <i class="fas fa-download"></i> Descargar PDF
+            </button>
         </div>
 
-        <div class="downloads-grid">
-            <div class="download-card">
-                <i class="fas fa-file-pdf download-icon"></i>
-                <h3>Guía Completa PDF</h3>
-                <p>Manual de 50+ páginas con todos los comandos Batch, historia de SO y mejores prácticas.</p>
-                <button class="btn-download" onclick="simularDescarga('Guia_Completa.pdf')">
-                    <i class="fas fa-download"></i> Descargar PDF
-                </button>
-            </div>
-            </div>  <!-- cierre del PDF -->
-
-            <!-- NUEVA TARJETA BAT -->
-            <div class="download-card">
+        <!-- BAT -->
+        <div class="download-card">
             <i class="fas fa-terminal download-icon"></i>
             <h3>Script de Mantenimiento (.bat)</h3>
             <p>Archivo Batch real con menú interactivo de mantenimiento del sistema.</p>
             <a href="files/MantenimientoV2.bat" download class="btn-download">
                 <i class="fas fa-download"></i> Descargar BAT
-             </a>
-            </div>
+            </a>
+        </div>
 
-            <div class="download-card">
+        <!-- Scanner -->
+        <div class="download-card">
             <i class="fas fa-search download-icon"></i>
             <h3>Scanner.bat</h3>
-            <p>Script independiente que verifica y repara archivos del sistema usando SFC.</p>
+            <p>Verifica y repara archivos del sistema usando SFC.</p>
             <a href="files/scanner.bat" download class="btn-download">
-                    <i class="fas fa-download"></i> Descargar Scanner
+                <i class="fas fa-download"></i> Descargar Scanner
             </a>
-            </div>
         </div>
 
-            <div class="download-card">
-                <i class="fas fa-gamepad download-icon"></i>
-                <h3>Juego Educativo</h3>
-                <p>Quiz interactivo para practicar comandos Batch. ¡Compite por la mejor puntuación!</p>
-                <button class="btn-download" onclick="simularDescarga('Quiz_Batch.exe')">
-                    <i class="fas fa-play"></i> Jugar Ahora
-                </button>
-            </div>
-
-            <div class="download-card">
-                <i class="fas fa-clipboard-list download-icon"></i>
-                <h3>Cheat Sheet</h3>
-                <p>Referencia rápida de comandos Batch para imprimir y tener siempre a mano.</p>
-                <button class="btn-download" onclick="simularDescarga('Batch_Cheatsheet.pdf')">
-                    <i class="fas fa-download"></i> Descargar
-                </button>
-            </div>
-        </div>
-
-        <!-- Certificado Interactivo -->
-        <div class="certificado-container">
-            <h3 style="margin-bottom: 1rem; font-size: 1.8rem;">
-                <i class="fas fa-award" style="color: var(--naranja);"></i>
-                Obtén tu Certificado
-            </h3>
-            <p style="margin-bottom: 2rem; opacity: 0.9;">
-                Has completado el curso de Historia de SO y Lenguaje Batch. 
-                Genera tu certificado personalizado ahora.
-            </p>
-            
-            <button class="btn-certificado" onclick="generarCertificado()">
-                <i class="fas fa-certificate"></i> Generar Certificado
+        <!-- Juego -->
+        <div class="download-card">
+            <i class="fas fa-gamepad download-icon"></i>
+            <h3>Juego Educativo</h3>
+            <p>Quiz interactivo para practicar comandos Batch.</p>
+            <button class="btn-download" onclick="simularDescarga('Quiz_Batch.exe')">
+                <i class="fas fa-play"></i> Jugar Ahora
             </button>
-
-            <div id="certificado-display" class="certificado-display">
-                <div class="certificado-titulo">
-                    <i class="fas fa-award"></i> CERTIFICADO DE COMPLETITUD
-                </div>
-                <p style="font-size: 1.1rem;">Se otorga el presente certificado a:</p>
-                <div id="cert-nombre" class="certificado-nombre"></div>
-                <p style="margin: 1rem 0;">
-                    Por haber completado satisfactoriamente el curso<br>
-                    <strong>"Historia de Sistemas Operativos y Lenguaje Batch"</strong>
-                </p>
-                <p style="margin-top: 1rem;">
-                    <i class="fas fa-check-circle" style="color: var(--verde);"></i> 
-                    Nivel: Básico a Avanzado<br>
-                    <i class="fas fa-clock" style="color: var(--azul);"></i> 
-                    Duración: 20 horas
-                </p>
-                <div class="certificado-fecha">
-                    Fecha de emisión: <span id="cert-fecha"></span>
-                </div>
-                <button class="btn-download" onclick="simularDescarga('Certificado.pdf')" style="margin-top: 2rem;">
-                    <i class="fas fa-download"></i> Descargar Certificado
-                </button>
-            </div>
         </div>
-    </section>
-  <!-- FIN DESCARGAS -->
-   <!-- =====================================================
-     SECCIÓN BAT → EXE
-===================================================== -->
 
-<section id="batexe-detalle" class="section-detail">
+        <!-- Cheat -->
+        <div class="download-card">
+            <i class="fas fa-clipboard-list download-icon"></i>
+            <h3>Cheat Sheet</h3>
+            <p>Referencia rápida de comandos Batch para imprimir.</p>
+            <button class="btn-download" onclick="simularDescarga('Batch_Cheatsheet.pdf')">
+                <i class="fas fa-download"></i> Descargar
+            </button>
+        </div>
 
-    <button class="back-btn" onclick="showSection('inicio')">
-        <i class="fas fa-arrow-left"></i> Volver
-    </button>
-
-    <div class="section-header">
-        <h2>
-            <i class="fas fa-cogs" style="color: var(--azul);"></i>
-            Convertir BAT a EXE
-        </h2>
-        <p>Cómo transformar tu script Batch en un ejecutable profesional (.exe)</p>
     </div>
-
-    <!-- imágenes explicativas -->
-    
-::contentReference[oaicite:0]{index=0}
+    <!-- ================= FIN GRID ================= -->
 
 
-    <div class="card" style="max-width:800px;margin:auto;padding:2rem;">
+    <!-- ================= CERTIFICADO ================= -->
+    <div class="certificado-container">
 
-        <h3 style="margin-bottom:1rem;">¿Para qué sirve convertir a EXE?</h3>
+        <h3 style="margin-bottom: 1rem; font-size: 1.8rem;">
+            <i class="fas fa-award" style="color: var(--naranja);"></i>
+            Obtén tu Certificado
+        </h3>
 
-        <ul style="margin-bottom:2rem;">
-            <li>✔ Ejecutar el script como programa normal</li>
-            <li>✔ Ocultar el código .bat</li>
-            <li>✔ Más profesional para entregar o distribuir</li>
-            <li>✔ Evitar que el usuario modifique el script</li>
-        </ul>
-
-
-        <h3 style="margin-bottom:1rem;">Pasos para convertirlo</h3>
-
-        <ol style="line-height:2;">
-            <li>Descargar <strong>Bat To Exe Converter</strong></li>
-            <li>Abrir el archivo <code>MantenimientoV2.bat</code></li>
-            <li>Pulsar <strong>Compile</strong></li>
-            <li>Se generará automáticamente un archivo <code>.exe</code></li>
-        </ol>
-
-
-        <div class="code-block" style="margin-top:2rem;">
-MantenimientoV2.bat  →  MantenimientoV2.exe
-        </div>
-
-        <p style="margin-top:2rem;">
-        💡 <strong>Consejo:</strong> usa el .exe cuando entregues el proyecto para que el usuario
-        solo tenga que hacer doble clic sin ver la consola de comandos.
+        <p style="margin-bottom: 2rem; opacity: 0.9;">
+            Genera tu certificado personalizado ahora.
         </p>
 
+        <button class="btn-certificado" onclick="generarCertificado()">
+            <i class="fas fa-certificate"></i> Generar Certificado
+        </button>
+
+        <div id="certificado-display" class="certificado-display">
+
+            <div class="certificado-titulo">
+                <i class="fas fa-award"></i> CERTIFICADO DE COMPLETITUD
+            </div>
+
+            <p>Se otorga el presente certificado a:</p>
+
+            <div id="cert-nombre" class="certificado-nombre"></div>
+
+            <p>
+                Por haber completado el curso<br>
+                <strong>"Historia de Sistemas Operativos y Lenguaje Batch"</strong>
+            </p>
+
+            <div class="certificado-fecha">
+                Fecha de emisión: <span id="cert-fecha"></span>
+            </div>
+
+            <button class="btn-download" onclick="simularDescarga('Certificado.pdf')" style="margin-top: 2rem;">
+                <i class="fas fa-download"></i> Descargar Certificado
+            </button>
+
+        </div>
     </div>
 
 </section>
-
-
+<!-- ================= FIN DESCARGAS ================= -->
 <!-- ================= QUIZ ================= -->
-
 <section id="quiz-detalle" class="section-detail">
 
     <button class="back-btn" onclick="showSection('inicio')">
@@ -774,16 +726,104 @@ MantenimientoV2.bat  →  MantenimientoV2.exe
                 <div id="quiz-progress-bar" class="quiz-progress-bar"></div>
             </div>
 
-        <div id="quiz-box"></div>
+            <div id="quiz-box"></div>
+        </div>
     </div>
+
+</section>
+<!-- =====================================================
+     SECCIÓN BAT → EXE
+===================================================== -->
+
+<section id="batexe-detalle" class="section-detail">
+
+    <button class="back-btn" onclick="showSection('inicio')">
+        <i class="fas fa-arrow-left"></i> Volver
+    </button>
+
+    <div class="section-header">
+        <h2>
+            <i class="fas fa-cogs" style="color: var(--azul);"></i>
+            Convertir BAT a EXE
+        </h2>
+        <p>Distribuye tu script Batch como una aplicación profesional ejecutable</p>
     </div>
+
+    
+::contentReference[oaicite:0]{index=0}
+
+
+    <div class="card" style="max-width:900px;margin:auto;padding:2rem;">
+
+        <h3 style="color:var(--azul); margin-bottom:1rem;">
+            ¿Qué significa convertir BAT a EXE?
+        </h3>
+
+        <p>
+        Un archivo <strong>.bat</strong> es un script de texto plano que cualquiera puede abrir y modificar.
+        Al convertirlo a <strong>.exe</strong>, se transforma en un ejecutable como cualquier programa de Windows,
+        lo que permite distribuirlo de forma más profesional y segura.
+        </p>
+
+
+        <h3 style="margin-top:2rem; color:var(--verde);">Ventajas de usar EXE</h3>
+
+        <ul style="line-height:2;">
+            <li>✔ El usuario solo hace doble clic (más fácil de usar)</li>
+            <li>✔ Oculta el código fuente</li>
+            <li>✔ Apariencia más profesional</li>
+            <li>✔ Evita modificaciones accidentales</li>
+            <li>✔ Ideal para entregar proyectos o clientes</li>
+        </ul>
+
+
+        <h3 style="margin-top:2rem;">Pasos para convertirlo</h3>
+
+        <ol style="line-height:2;">
+            <li>Descargar el programa <strong>Bat To Exe Converter</strong></li>
+            <li>Abrir tu archivo <code>MantenimientoV2.bat</code></li>
+            <li>Pulsar el botón <strong>Compile</strong></li>
+            <li>Se generará automáticamente el archivo <code>.exe</code></li>
+        </ol>
+
+
+        <h3 style="margin-top:2rem;">Ejemplo práctico</h3>
+
+        <div class="code-block">
+MantenimientoV2.bat
+        ↓
+MantenimientoV2.exe
+        </div>
+
+
+        <h3 style="margin-top:2rem;">¿Cuándo usarlo?</h3>
+
+        <p>
+        Recomendado cuando quieras:
+        </p>
+
+        <ul style="line-height:2;">
+            <li>Entregar el proyecto al profesor</li>
+            <li>Distribuir herramientas de mantenimiento</li>
+            <li>Compartir scripts con usuarios no técnicos</li>
+            <li>Evitar que modifiquen el código Batch</li>
+        </ul>
+
+
+        <div style="margin-top:2rem; padding:1rem; background:rgba(57,255,20,0.1); border-left:4px solid var(--verde); border-radius:8px;">
+            💡 <strong>Consejo:</strong> Para la entrega final del proyecto, distribuye el
+            <strong>.exe</strong> en lugar del .bat. Da mejor imagen profesional.
+        </div>
+
+    </div>
+
 </section>
     
     <!-- ============================================
          FOOTER
          ============================================ -->
     <footer>
-        <p>&copy; 2024 SO & Batch Master. Curso educativo interactivo.</p>
+        <p>&copy; 2026 SO & Batch Master. Curso educativo interactivo.</p>
         <p style="margin-top: 0.5rem; opacity: 0.7; font-size: 0.9rem;">
             <i class="fas fa-code"></i> Desarrollado con HTML5, CSS3 y JavaScript Vanilla
         </p>
@@ -799,8 +839,7 @@ MantenimientoV2.bat  →  MantenimientoV2.exe
     <p>🔧 <strong>Soporte Técnico:</strong> Álvaro Marco</p>
 
 </div>
-    </footer>
-    <script src="js/app.js"></script>
-
+    </footer>  
+<script src="js/app.js"></script>
 </body>
 </html>
