@@ -26,6 +26,14 @@
             --sombra: 0 8px 20px rgba(255,255,255,0.05);
             --sombra-hover: 0 12px 30px rgba(255,255,255,0.1);
         }
+        /* =========================
+   MODO OSCURO - TARJETAS
+========================= */
+
+        .dark .download-card {
+            border: 2px solid white;
+        }
+
 
         /* ============================================
            RESET Y BASE
@@ -673,13 +681,13 @@
         }
 
         .download-card {
-            background: var(--card-bg-claro);
-            border-radius: var(--radius);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: var(--sombra);
-            transition: var(--transicion);
-            border: 2px solid transparent;
+            display: flex;
+            border: black solid 2px;
+            border-radius: 20px;
+            padding: 20px;
+            flex-direction: column;
+            justify-content: space-between; /* clave */
+            height: 100%; /* importante */
         }
 
         .download-card:hover {
@@ -704,7 +712,7 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            margin-top: 1rem;
+            margin-top: auto;
             transition: var(--transicion);
         }
 
