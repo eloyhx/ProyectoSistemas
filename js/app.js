@@ -320,11 +320,83 @@ function showResult(){
         <button class="btn-card" onclick="restartQuiz()">Reintentar</button>
     `;
 }
-
 function restartQuiz(){
     quizIndex = 0;
     quizScore = 0;
     loadQuiz();
 }
+/* =====================================
+   CERTIFICADO PDF PROFESIONAL
+===================================== */
+
+async function descargarCertificadoPDF() {
+
+    const { jsPDF } = window.jspdf;
+
+    const nombre = document.getElementById("cert-nombre").textContent || "Alumno";
+
+    const fecha = new Date().toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+
+    const doc = new jsPDF("landscape");
+
+    /* ===== Fondo ===== */
+    doc.setFillColor(15,15,15);
+    doc.rect(0,0,297,210,"F");
+
+    /* ===== Marco ===== */
+    doc.setDrawColor(57,255,20);
+    doc.setLineWidth(3);
+    doc.rect(10,10,277,190);
+
+    /* ===== Título ===== */
+    doc.setTextColor(255,123,0);
+    doc.setFontSize(40);
+    doc.setFont("helvetica","bold");
+    doc.text("CERTIFICADO DE COMPLETITUD", 148, 40, {align:"center"});
+
+    /* ===== Subtítulo ===== */
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(18);
+    doc.text("Se otorga el presente certificado a:", 148, 65, {align:"center"});
+
+    /* ===== Nombre grande ===== */
+    doc.setTextColor(0,200,255);
+    doc.setFontSize(36);
+    doc.text(nombre.toUpperCase(), 148, 95, {align:"center"});
+
+    /* ===== Línea ===== */
+    doc.setDrawColor(255,123,0);
+    doc.line(90, 102, 206, 102);
+
+    /* ===== Texto curso ===== */
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(18);
+
+    doc.text("Por haber completado satisfactoriamente el curso", 148, 125, {align:"center"});
+
+    doc.setFont("helvetica","bold");
+    doc.text('"Historia de Sistemas Operativos y Lenguaje Batch"', 148, 140, {align:"center"});
+
+    /* ===== Datos extra ===== */
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(14);
+
+    doc.text("Nivel: Básico → Avanzado", 40, 170);
+    doc.text("Duración: 20 horas", 40, 180);
+
+    doc.text("Fecha de emisión: " + fecha, 200, 180);
+
+    /* ===== Firma ===== */
+    doc.line(200, 160, 270, 160);
+    doc.text("Instructor", 235, 168, {align:"center"});
+
+    /* ===== Descargar ===== */
+    doc.save("Certificado_" + nombre + ".pdf");
+}
+
 
     

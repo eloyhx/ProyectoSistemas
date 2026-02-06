@@ -311,29 +311,95 @@ netstat -ano > conexiones.txt
                 <h4>Fundamentos Básicos de Batch</h4>
                 <p>En este nivel aprenderás los conceptos esenciales para crear tus primeros scripts.</p>
                 
-                <h5 style="margin-top: 1.5rem; color: var(--azul);">1. Estructura básica</h5>
+                <h5 style="margin-top: 1.5rem; color: var(--azul);">Estructura básica</h5>
+                <p>Uso: echo [Mensaje] </p>
+                <div class="code-block">
+    <span class="command">@echo</span> <span class="variable">off</span>
+    <span class="command">title</span> <span class="string">"Mi Primer Script"</span>
+    <span class="command">echo</span> <span class="string">"Hola Mundo"</span>
+    <span class="command">pause</span>
+</div>
+
+<p>Este es un script básico que muestra mensajes en la consola.</p>
+<br>
+
+                <p>Uso: pause </p>
+                <h5 style="margin-top: 1.5rem; color: var(--azul);"></h5>
                 <div class="code-block">
 <span class="command">@echo</span> <span class="variable">off</span>
-<span class="command">title</span> <span class="string">"Mi Primer Script"</span>
-<span class="command">echo</span> <span class="string">"Hola Mundo"</span>
-<span class="command">pause</span>
+    <span class="command">echo</span> <span class="string">"Este Script se detendrá hasta que presiones una tecla."</span>
+    <span class="command">pause</span> <span class="string"></span>
+    <span class="command">echo</span>  <span class="string">"¡Gracias por ejecutar el script!"</span>
                 </div>
-
-                <h5 style="margin-top: 1.5rem; color: var(--azul);">2. Variables Simples</h5>
+                <p>Pausa la ejecución del script hasta que se presiona una tecla.</p>
+                <br>
+                <p>Uso: cls </p>
+                <h5 style="margin-top: 1.5rem; color: var(--azul);"></h5>
                 <div class="code-block">
-<span class="command">set</span> <span class="variable">nombre</span>=<span class="string">"Juan"</span>
-<span class="command">echo</span> <span class="string">"Hola %nombre%"</span>
-<span class="command">set</span> /<span class="variable">p</span> <span class="variable">edad</span>=<span class="string">"Introduce tu edad: "</span>
+    <span class="command">@echo</span> <span class="variable">off</span>
+    <span class="command">echo</span> <span class="string">"Este es un mensaje antes de limpiar la pantalla."</span>
+    <span class="command">pause</span> <span class="string"></span>
+    <span class="command">cls</span>
+    <span class="command">echo</span>  <span class="string">"Pantalla limpia"</span>
                 </div>
+                <p>Limpia la pantalla de la consola, eliminando todo el texto visible.</p>
+                <br>
+                <p>Uso: title [nombre del título] </p>
+                <div class="code-block">
+    <span class="command">@echo</span> <span class="variable">off</span>
+    <span class="command">title</span> <span class="string">"Mi Script Batch"</span>
+    <span class="command">echo</span> <span class="string">"Este es el título de la ventana</span>
+    <span class="command">pause</span>  <span class="string"></span>
+                </div>
+                <p>Cambia el título de la ventana de la consola.</p>
+                <br>
+                <p>Uso: set variable=valor</p>
+                <div class="code-block">
+    <span class="command">@echo</span> <span class="variable">off</span>
+    <span class="command">set</span> <span class="variable">nombre</span> <span class="string">"Juan"</span>
+    <span class="command">echo</span> <span class="string">"Hola %nombre%"</span>
+    <span class="command">pause</span>  <span class="string"></span>
+                </div>
+                <p>Define una variable de entorno y la utiliza para mostrar un mensaje personalizado.</p>
+                <br>
+                <p>Uso: goto [etiqueta]</p>
+                <div class="code-block">
+    <span class="command">@echo</span> <span class="variable">off</span>
+    <span class="command">echo</span> <span class="string">"Inicio del Script"</span>
+    <span class="command">goto</span> <span class="variable">parte2</span>
 
-                <h5 style="margin-top: 1.5rem; color: var(--azul);">3. Comandos Esenciales</h5>
-                <ul style="margin: 1rem 0; padding-left: 1.5rem;">
-                    <li><code>echo</code> - Muestra mensajes</li>
-                    <li><code>cls</code> - Limpia la pantalla</li>
-                    <li><code>pause</code> - Espera tecla</li>
-                    <li><code>dir</code> - Lista archivos</li>
-                    <li><code>cd</code> - Cambia directorio</li>
-                </ul>
+    <span class="command">:parte1</span>
+    <span class="command">echo</span> <span class="string">"Esta es la parte 1"</span>
+    <span class="command">goto</span> <span class="variable">fin</span>
+
+    <span class="command">:parte2</span>
+    <span class="command">echo</span> <span class="string">"Esta es la parte 2"</span>
+    <span class="command">goto</span> <span class="variable">fin</span>
+
+    <span class="command">:fin</span>
+    <span class="command">echo</span> <span class="string">"Fin del Script"</span>
+    <span class="command">pause</span> <span class="string"></span>
+                </div>
+                <p>Redirige el flujo del script a una etiqueta especificada</p>
+                <br>
+                <p>Uso: call otroarchivo.bat</p>
+                <div class="code-block">
+    <span class="command">@echo</span> <span class="variable">off</span>
+    <span class="command">echo</span> <span class="string">"Este script llamará a otro archivo Batch"</span>
+    <span class="command">call</span> <span class="string">"otroarchivo.bat"</span>
+    <span class="command">echo</span> <span class="string">"Regresando al script original"</span>
+    <span class="command">pause</span> <span class="string"></span>
+                </div>
+                    <p>Ejecuta otro script Batch desde el script actual y regresa al finalizar.</p>
+                    <br>
+                    <p>Uso: exit</p>
+                    <div class="code-block">
+    <span class="command">@echo</span> <span class="variable">off</span>
+    <span class="command">echo</span> <span class="string">"Este script se cerrará después de mostrar este mensaje"</span>
+    <span class="command">pause</span> <span class="string"></span>
+    <span class="command">exit</span>
+                </div> 
+                <p>Finaliza la ejecución del script y cierra la ventana de la consola.</p>
 
                 <a href="#batch-intermedio-seccion" class="btn-section-link" onclick="closeModal('modal-inicio'); showSection('modal-intermedio')">
                     Ir al Script Intermedio <i class="fas fa-arrow-right"></i>
@@ -586,9 +652,10 @@ netstat -ano > conexiones.txt
                 </ul>
             </div>
 
-            <button class="btn-download" onclick="simularDescarga('Mantenimiento_Windows.bat')" style="margin-top: 2rem;">
-                <i class="fas fa-download"></i> Descargar Script Completo
-            </button>
+            <a href="files/Mantenimiento_Windows.txt" download="../Mantenimiento_Windows.txt" class="btn-download">
+    <i class="fas fa-download"></i> Descargar Script Completo
+</a>
+
         </div>
     </section>
 
@@ -615,16 +682,18 @@ netstat -ano > conexiones.txt
             <i class="fas fa-file-pdf download-icon"></i>
             <h3>Guía Completa PDF</h3>
             <p>Manual de 50+ páginas con todos los comandos Batch.</p>
-            <button class="btn-download" onclick="simularDescarga('Guia_Completa.pdf')">
-                <i class="fas fa-download"></i> Descargar PDF
-            </button>
+            <a href="files/Guia_Completa_Batch_EXTENDIDA-2.pdf" target="_blank" class="btn-download">
+            <i class="fas fa-download"></i> Ver / Descargar PDF
+            </a>
+
+
         </div>
 
         <!-- BAT -->
         <div class="download-card">
             <i class="fas fa-terminal download-icon"></i>
             <h3>Script de Mantenimiento (.bat)</h3>
-            <p>Archivo Batch real con menú interactivo de mantenimiento del sistema.</p>
+            <p>Archivo Batch real del mantenimiento del sistema.</p>
             <a href="files/MantenimientoV2.bat" download class="btn-download">
                 <i class="fas fa-download"></i> Descargar BAT
             </a>
@@ -644,13 +713,13 @@ netstat -ano > conexiones.txt
         <div class="download-card">
             <i class="fas fa-gamepad download-icon"></i>
             <h3>Juego Educativo</h3>
-            <p>Quiz interactivo para practicar comandos Batch.</p>
-            <button class="btn-download" onclick="simularDescarga('Quiz_Batch.exe')">
-                <i class="fas fa-play"></i> Jugar Ahora
-            </button>
+            <p>Juego interactivo para practicar comandos Batch.</p>
+            <a href="files/minijuegos_plus.bat" download class="btn-download">
+                <i class="fas fa-download"></i> Descargar Juego
+            </a>
         </div>
 
-        <!-- Cheat -->
+        <!-- Cheat 
         <div class="download-card">
             <i class="fas fa-clipboard-list download-icon"></i>
             <h3>Cheat Sheet</h3>
@@ -658,7 +727,7 @@ netstat -ano > conexiones.txt
             <button class="btn-download" onclick="simularDescarga('Batch_Cheatsheet.pdf')">
                 <i class="fas fa-download"></i> Descargar
             </button>
-        </div>
+        </div>-->
 
     </div>
     <!-- ================= FIN GRID ================= -->
@@ -699,7 +768,7 @@ netstat -ano > conexiones.txt
                 Fecha de emisión: <span id="cert-fecha"></span>
             </div>
 
-            <button class="btn-download" onclick="simularDescarga('Certificado.pdf')" style="margin-top: 2rem;">
+            <button class="btn-download" onclick="descargarCertificadoPDF()" style="margin-top: 2rem;">
                 <i class="fas fa-download"></i> Descargar Certificado
             </button>
 
@@ -748,10 +817,6 @@ netstat -ano > conexiones.txt
         </h2>
         <p>Distribuye tu script Batch como una aplicación profesional ejecutable</p>
     </div>
-
-    
-::contentReference[oaicite:0]{index=0}
-
 
     <div class="card" style="max-width:900px;margin:auto;padding:2rem;">
 
@@ -825,7 +890,7 @@ MantenimientoV2.exe
     <footer>
         <p>&copy; 2026 SO & Batch Master. Curso educativo interactivo.</p>
         <p style="margin-top: 0.5rem; opacity: 0.7; font-size: 0.9rem;">
-            <i class="fas fa-code"></i> Desarrollado con HTML5, CSS3 y JavaScript Vanilla
+            
         </p>
         <hr style="margin:2rem 0; opacity:0.3;">
 
@@ -840,6 +905,7 @@ MantenimientoV2.exe
 
 </div>
     </footer>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
 <script src="js/app.js"></script>
 </body>
 </html>

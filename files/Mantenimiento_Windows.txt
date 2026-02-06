@@ -1,0 +1,46 @@
+@echo off
+setlocal EnableDelayedExpansion
+title "Mantenimiento del Sistema v2.0"
+color 0A
+
+set "logFile=%temp%\Mantenimiento_%date:~-4,4%%date:~-10,2%%date:~-7,2%.log"
+
+echo ======================================== >> "%logFile%"
+echo Inicio de mantenimiento: %date% %time% >> "%logFile%"
+echo ======================================== >> "%logFile%"
+
+echo [1/5] Limpiando archivos temporales...
+del /q /f /s %temp%\*.tmp 2>nul
+del /q /f /s %windir%\temp\*.* 2>nul
+echo Limpieza completada >> "%logFile%"
+
+echo [2/5] Verificando integridad del disco...
+echo y | chkdsk C: /f /scan
+if %errorlevel% equ 0 (
+    echo Disco OK >> "%logFile%"
+) else (
+    echo ADVERTENCIA: Errores encontrados >> "%logFile%"
+)
+
+echo [3/5] Escaneando archivos del sistema...
+sfc /scannow > "%temp%\sfc_output.txt"
+
+findstr /c:"no encontró" "%temp%\sfc_output.txt" > nul
+if %errorlevel% equ 0 (
+    echo SFC: No se encontraron violaciones >> "%logFile%"
+) else (
+    echo [4/5] Reparando imagen del sistema con DISM...
+    DISM /Online /Cleanup-Image /RestoreHealth
+)
+
+echo [5/5] Optimizando configuracion de red...
+ipconfig /flushdns
+ipconfig /release
+ipconfig /renew
+echo Red optimizada >> "%logFile%"
+
+echo ======================================== >> "%logFile%"
+echo Mantenimiento completado: %date% %time% >> "%logFile%"
+
+echo Log guardado en: %logFile%
+pause
