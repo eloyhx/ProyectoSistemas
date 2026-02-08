@@ -311,7 +311,11 @@ netstat -ano > conexiones.txt
                 <h4>Fundamentos Básicos de Batch</h4>
                 <p>En este nivel aprenderás los conceptos esenciales para crear tus primeros scripts.</p>
                 
-                <h5 style="margin-top: 1.5rem; color: var(--azul);">Estructura básica</h5>
+                <h5 style="margin-top: 1.5rem; color: var(--azul);">Estructura básica
+                </h5>
+                <h5 style="margin-top: 1.5rem; color: var(--azul);">
+                    
+                </h5>
                 <p>Uso: echo [Mensaje] </p>
                 <div class="code-block">
     <span class="command">@echo</span> <span class="variable">off</span>
@@ -419,7 +423,7 @@ netstat -ano > conexiones.txt
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body">
+            <class="modal-body">
                 <h4>Scripts Avanzados y Estructuras de Control</h4>
                 
                 <h5 style="margin-top: 1.5rem; color: var(--naranja);">1. Condicionales IF-ELSE</h5>
@@ -432,21 +436,10 @@ netstat -ano > conexiones.txt
 
 <span class="command">if exist</span> <span class="string">"archivo.txt"</span> <span class="command">del</span> <span class="string">"archivo.txt"</span>
                 </div>
+                <p>Permite evaluar una condición (exist, errorlevel, comparaciones numéricas, strings, etc.) y ejecutar distintos comandos según el resultado.
+Se usa para automatizar decisiones, como validar archivos, edades, rutas o estados del sistema.</p>
 
-                <h5 style="margin-top: 1.5rem; color: var(--naranja);">2. Bucles FOR</h5>
-                <div class="code-block">
-<span class="comment">:: Bucle numérico</span>
-<span class="command">for</span> /<span class="variable">L</span> <span class="variable">%%i</span> <span class="command">in</span> (<span class="string">1,1,10</span>) <span class="command">do</span> (
-    <span class="command">echo</span> <span class="string">"Iteración %%i"</span>
-)
-
-<span class="comment">:: Bucle en archivos</span>
-<span class="command">for</span> <span class="variable">%%f</span> <span class="command">in</span> (*.<span class="variable">txt</span>) <span class="command">do</span> (
-    <span class="command">echo</span> <span class="string">"Procesando: %%f"</span>
-)
-                </div>
-
-                <h5 style="margin-top: 1.5rem; color: var(--naranja);">3. Funciones (CALL)</h5>
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">2. Funciones (CALL)</h5>
                 <div class="code-block">
 <span class="command">call</span> :<span class="variable">funcion_saludo</span> <span class="string">"Juan"</span>
 <span class="command">goto</span> :<span class="variable">eof</span>
@@ -455,6 +448,8 @@ netstat -ano > conexiones.txt
 <span class="command">echo</span> <span class="string">"Hola, %~1"</span>
 <span class="command">exit</span> /<span class="variable">b</span>
                 </div>
+                <p>Ejecuta una etiqueta (:miFuncion) como si fuera una función y luego regresa al punto donde fue llamada.
+Sirve para reutilizar código y pasar parámetros con %1 %2 %3... sin repetir bloques.</p>
 
                 <a href="#batch-avanzado-seccion" class="btn-section-link" onclick="closeModal('modal-intermedio'); showSection('batch-avanzado-seccion')">
                     Ir al Script Avanzado <i class="fas fa-arrow-right"></i>
