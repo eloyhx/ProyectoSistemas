@@ -1,0 +1,204 @@
+@echo off
+setlocal EnableExtensions
+title Pildora Netstat - Inspeccion de Conexiones (Windows)
+
+:menu
+cls
+echo ==========================================================
+echo  INSPECCION DE CONEXIONES CON NETSTAT (Windows)
+echo ==========================================================
+echo.
+echo Que vas a aprender aqui :
+echo  - LISTENING  : un servicio esta "escuchando" en un puerto.
+echo  - ESTABLISHED: conexion activa (normal en navegadores, apps, etc.).
+echo  - TIME_WAIT  : conexion ya cerrada, Windows la mantiene un rato.
+echo  - CLOSE_WAIT : remoto cerro, tu app aun no cerro del todo.
+echo.
+echo Menu:
+echo  [1] Foto general (netstat -a)
+echo  [2] Conexiones con PID (netstat -ano)
+echo  [3] Filtrar por puerto (ej: 443) y ver PID
+echo  [4] Ver que programa es un PID (tasklist)
+echo  [5] Ver UDP (netstat UDP con PID)
+echo  [6] Ver solo puertos en LISTENING (servidores locales)
+echo  [0] Salir
+echo.
+
+set "OPCION="
+set /p "OPCION=Que quieres hacer: "
+
+if "%OPCION%"=="0" goto salir
+if "%OPCION%"=="1" goto op_a
+if "%OPCION%"=="2" goto op_ano
+if "%OPCION%"=="3" goto op_puerto
+if "%OPCION%"=="4" goto op_pid
+if "%OPCION%"=="5" goto op_udp
+if "%OPCION%"=="6" goto op_listening
+
+echo.
+echo Opcion no valida. Escribe un numero del 0 al 6.
+pause
+goto menu
+
+:op_a
+cls
+echo ----------------------------------------------------------
+echo [1] FOTO GENERAL
+echo Comando: netstat -a
+echo.
+echo Que veras:
+echo  - LISTENING (puertos abiertos en tu PC)
+echo  - ESTABLISHED/TIME_WAIT (conexiones activas o recien cerradas)
+echo ----------------------------------------------------------
+echo.
+netstat -a
+echo.
+pause
+goto menu
+
+:op_ano
+cls
+echo ----------------------------------------------------------
+echo [2] CONEXIONES CON PID
+echo Comando: netstat -ano
+echo.
+echo Que veras:
+echo  - Al final de cada linea aparece el PID (ID del proceso)
+echo ----------------------------------------------------------
+echo.
+netstat -ano
+echo.
+pause
+goto menu
+
+:op_puerto
+cls
+echo ----------------------------------------------------------
+echo [3] FILTRAR POR PUERTO (y ver PID)
+echo ----------------------------------------------------------
+echo Ejemplos tipicos:
+echo  - 443 = HTTPS (navegador, apps)
+echo  - 5500/5501 = Live Server (VS Code) u otros servidores dev
+echo  - 3306 = MySQL
+echo ----------------------------------------------------------
+echo.
+
+set "PORT="
+set /p "PORT=Introduce el puerto a filtrar (Enter=443): "
+if "%PORT%"=="" set "PORT=443"
+
+rem Validacion simple: solo numeros
+for /f "delims=0123456789" %%A in ("%PORT%") do (
+  echo.
+  echo Puerto NO valido. Escribe solo numeros (ej 443).
+  pause
+  goto menu
+)
+
+echo.
+echo Comando: netstat -ano ^| findstr ":%PORT%"
+echo.
+netstat -ano | findstr ":%PORT%"
+echo.
+echo Si ves un PID, ve a la opcion [4] para saber el programa.
+echo.
+pause
+goto menu
+
+:op_pid
+cls
+echo ----------------------------------------------------------
+echo [4] SABER QUE PROGRAMA ES UN PID
+echo ----------------------------------------------------------
+echo Usa esto despues de ver un PID en netstat -ano.
+echo.
+
+set "PID="
+set /p "PID=Introduce el PID (ej 21948): "
+if "%PID%"=="" goto menu
+
+rem Validacion simple: solo numeros
+for /f "delims=0123456789" %%A in ("%PID%") do (
+  echo.
+  echo PID NO valido. Escribe solo numeros.
+  pause
+  goto menu
+)
+
+echo.
+echo Comando: tasklist /fi "PID eq %PID%"
+echo.
+tasklist /fi "PID eq %PID%"
+echo.
+pause
+goto menu
+
+:op_udp
+cls
+echo ----------------------------------------------------------
+echo [5] UDP (PUERTOS UDP ABIERTOS + PID)
+echo ----------------------------------------------------------
+echo Nota:
+echo  - UDP no crea "sesiones" como TCP, por eso veras *:*
+echo  - Es normal ver 1900 (SSDP), 5353 (mDNS), 5355 (LLMNR), etc.
+echo ----------------------------------------------------------
+echo.
+
+echo (A) Ver UDP con PID:
+echo Comando: netstat -ano -p udp
+echo.
+netstat -ano -p udp
+echo.
+
+echo (B) Si quieres filtrar por puerto UDP, escribe uno ahora.
+set "UPORT="
+set /p "UPORT=Filtrar UDP por puerto (Enter para saltar): "
+if "%UPORT%"=="" goto udp_fin
+
+rem Validacion simple: solo numeros
+for /f "delims=0123456789" %%A in ("%UPORT%") do (
+  echo.
+  echo Puerto UDP NO valido. Escribe solo numeros.
+  pause
+  goto udp_fin
+)
+
+echo.
+echo Comando: netstat -ano -p udp ^| findstr ":%UPORT%"
+echo.
+netstat -ano -p udp | findstr ":%UPORT%"
+echo.
+echo Si sale un PID, usa la opcion [4] para ver el programa.
+echo.
+
+:udp_fin
+pause
+goto menu
+
+:op_listening
+cls
+echo ----------------------------------------------------------
+echo [6] SOLO PUERTOS EN LISTENING (SERVICIOS LOCALES)
+echo ----------------------------------------------------------
+echo Esto sirve para ver que servicios estan "abiertos" en tu PC.
+echo Ojo:
+echo  - 0.0.0.0:PUERTO = escucha en todas las interfaces (posible LAN)
+echo  - 127.0.0.1:PUERTO = solo tu PC (loopback)
+echo ----------------------------------------------------------
+echo.
+echo Comando: netstat -ano ^| findstr LISTENING
+echo.
+netstat -ano | findstr LISTENING
+echo.
+echo Consejo:
+echo  - Si ves un puerto que no esperas, copia el PID y usa [4].
+echo.
+pause
+goto menu
+
+:salir
+echo.
+echo Saliendo de la pildora...
+pause
+endlocal
+exit
