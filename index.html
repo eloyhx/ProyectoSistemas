@@ -347,46 +347,155 @@
                 if "%op%"=="2" call Scanner.bat
             </div>
 
-        </div>
+
+            <!-- ============================================
+             PÍLDORA DE MANTENIMIENTO (MAGENTA 0D)
+             ============================================ -->
+            <div class="batch-pill-container">
+                <h3 style="color: #ff00ff; margin-bottom: 1rem;">
+                    <i class="fas fa-magic"></i> Píldora: Script de Mantenimiento Interactivo
+                </h3>
+                <p>
+                    Copia y pega este script en un archivo <code>.bat</code> para tener una herramienta de mantenimiento
+                    completa con estética clásica.
+                </p>
+
+                <div class="terminal-pill">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div style="font-size: 0.8rem; opacity: 0.7;">Mantenimiento.bat</div>
+                        <button class="copy-btn" onclick="copyToClipboard('pill-mantenimiento-code')">
+                            <i class="fas fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                    <div class="pill-code-content" id="pill-mantenimiento-code">@echo off
+                        chcp 65001 > nul
+                        title Mantenimiento del PC - Menú Interactivo
+                        color 0D
+                        mode con: cols=80 lines=25
+
+                        :inicio
+                        cls
+                        echo ====================================
+                        echo MANTENIMIENTO DEL PC
+                        echo ====================================
+                        echo 1. Limpiar archivos temporales
+                        echo 2. Liberar caché DNS
+                        echo 3. Desfragmentar disco duro
+                        echo 4. Generar informe del sistema
+                        echo 5. Buscar y eliminar malware
+                        echo 6. Vaciar la papelera de reciclaje 🗑️
+                        echo 7. Copia de seguridad
+                        echo 8. Reparar disco
+                        echo 9. Reparar archivos (SFC)
+                        echo 10. Mantenimiento DISM
+                        echo 12. Scanner de seguridad
+                        echo 13. Netstat / Red
+                        echo 14. Salir
+                        echo ====================================
+                        set /p opcion="Selecciona una opción (1-14): "
+
+                        if "%opcion%"=="1" goto limpiar_temporales
+                        if "%opcion%"=="2" goto liberar_dns
+                        if "%opcion%"=="3" goto desfragmentar
+                        if "%opcion%"=="4" goto generar_informe
+                        if "%opcion%"=="5" goto buscar_malware
+                        if "%opcion%"=="6" goto vaciar_papelera
+                        if "%opcion%"=="7" goto copia_seguridad
+                        if "%opcion%"=="8" goto reparar_disco
+                        if "%opcion%"=="9" goto menu_sfc
+                        if "%opcion%"=="10" goto dism
+                        if "%opcion%"=="12" goto scanner
+                        if "%opcion%"=="13" goto netstat_menu
+                        if "%opcion%"=="14" exit
+                        goto inicio</div>
+                </div>
+
+                <h4 style="color: #ff00ff; margin: 2rem 0 1rem;"><i class="fas fa-book-open"></i> Funcionamiento Paso a
+                    Paso</h4>
+
+                <div class="explanation-grid">
+                    <div class="explanation-item">
+                        <span class="cmd-badge">Configuración</span>
+                        <h4>1. Configuración Inicial</h4>
+                        <p><code>@echo off</code> oculta comandos. <code>chcp 65001</code> habilita UTF-8.
+                            <code>color 0D</code> pone el tema magenta.</p>
+                    </div>
+                    <div class="explanation-item">
+                        <span class="cmd-badge">Menú</span>
+                        <h4>2. Menú Principal</h4>
+                        <p>La etiqueta <code>:inicio</code> marca el punto de retorno. <code>cls</code> limpia la
+                            pantalla y <code>echo</code> dibuja la interfaz.</p>
+                    </div>
+                    <div class="explanation-item">
+                        <span class="cmd-badge">Lógica</span>
+                        <h4>3. Selección de Opciones</h4>
+                        <p><code>set /p</code> captura la entrada del usuario. Los comandos <code>if</code> redirigen el
+                            flujo con <code>goto</code>.</p>
+                    </div>
+                    <div class="explanation-item">
+                        <span class="cmd-badge">Temporales</span>
+                        <h4>4. Limpieza</h4>
+                        <p><code>cleanmgr /sagerun:1</code> ejecuta el liberador de espacio automático de Windows.</p>
+                    </div>
+                    <div class="explanation-item">
+                        <span class="cmd-badge">Red</span>
+                        <h4>5. Liberar DNS</h4>
+                        <p><code>ipconfig /flushdns</code> limpia la caché de resolución de nombres para arreglar fallos
+                            de red.</p>
+                    </div>
+                    <div class="explanation-item">
+                        <span class="cmd-badge">Sistema</span>
+                        <h4>6. SFC y DISM</h4>
+                        <p>Usa herramientas avanzadas para verificar (SFC) y reparar (DISM) la imagen del sistema
+                            operativo.</p>
+                    </div>
+                </div>
+            </div>
 
 
-        <!-- =========================
+            <!-- =========================
      NETSTAT
      ========================= -->
 
-        <div style="margin-top:2rem; background: var(--card-bg-claro); padding:2rem; border-radius: var(--radius);">
+            <div style="margin-top:2rem; background: var(--card-bg-claro); padding:2rem; border-radius: var(--radius);">
 
-            <h3 style="color: var(--verde);">
-                <i class="fas fa-network-wired"></i> Uso de Netstat
-            </h3>
+                <h3 style="color: var(--verde);">
+                    <i class="fas fa-network-wired"></i> Uso de Netstat
+                </h3>
 
-            <p>
-                Netstat sirve para monitorizar las conexiones de red activas en el sistema, es decir, en nuestro
-                ordenador.
-                Aquí tienes un codigo batch para automatizar la tarea.
-            </p> <br>
-            <a href="files/nestat.txt" download class="btn-download">
-                <i class="fas fa-download"></i> Descargar Txt
-            </a>
-
-
-
-        </div>
+                <p>
+                    Netstat sirve para monitorizar las conexiones de red activas en el sistema, es decir, en nuestro
+                    ordenador.
+                    Aquí tienes un codigo batch para automatizar la tarea.
+                </p> <br>
+                <a href="files/nestat.txt" download class="btn-download">
+                    <i class="fas fa-download"></i> Descargar Txt
+                </a>
 
 
-        <!-- Enlace directo a sección avanzada -->
-        <div
-            style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--card-bg-claro); border-radius: var(--radius);">
-            <h3 style="margin-bottom: 1rem; color: var(--verde);">
-                <i class="fas fa-star"></i> ¿Quieres ir directo al script de mantenimiento completo?
-            </h3>
-            <p style="margin-bottom: 1.5rem;">Accede directamente a la explicación detallada línea por línea del script
-                avanzado.</p>
-            <button class="btn-card" onclick="showSection('batch-avanzado-seccion')"
-                style="background: var(--verde); color: #0a0a0a;">
-                <i class="fas fa-code"></i> Ver Script de Mantenimiento Completo
-            </button>
-        </div>
+
+            </div>
+
+
+            <!-- Enlace directo a sección avanzada -->
+            <div
+                style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--card-bg-claro); border-radius: var(--radius);">
+                <h3 style="margin-bottom: 1rem; color: var(--verde);">
+                    <i class="fas fa-star"></i> ¿Quieres ir directo al script de mantenimiento completo?
+                </h3>
+                <p style="margin-bottom: 1.5rem;">Accede directamente a la explicación detallada línea por línea del
+                    script
+                    avanzado.</p>
+                <button class="btn-card" onclick="showSection('batch-avanzado-seccion')"
+                    style="background: var(--verde); color: #0a0a0a;">
+                    <i class="fas fa-code"></i> Ver Script de Mantenimiento Completo
+                </button>
+            </div>
     </section>
 
     <!-- ============================================

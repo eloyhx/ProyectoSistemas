@@ -1,159 +1,159 @@
 
-        // ============================================
-        // GESTIÓN DE SECCIONES
-        // ============================================
-        
-        function showSection(sectionId) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.section-detail').forEach(section => {
-                section.classList.remove('active');
-            });
+// ============================================
+// GESTIÓN DE SECCIONES
+// ============================================
 
-            
-            
-            // Ocultar/mostrar inicio
-            const inicio = document.getElementById('inicio');
-            if (sectionId === 'inicio') {
-                inicio.style.display = 'block';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                inicio.style.display = 'none';
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                    if(sectionId === 'quiz-detalle') loadQuiz();
-                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-            
-            // Actualizar navegación activa
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('onclick').includes(sectionId)) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Cerrar menú móvil si está abierto
-            document.getElementById('navLinks').classList.remove('active');
+function showSection(sectionId) {
+    // Ocultar todas las secciones
+    document.querySelectorAll('.section-detail').forEach(section => {
+        section.classList.remove('active');
+    });
+
+
+
+    // Ocultar/mostrar inicio
+    const inicio = document.getElementById('inicio');
+    if (sectionId === 'inicio') {
+        inicio.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        inicio.style.display = 'none';
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            if (sectionId === 'quiz-detalle') loadQuiz();
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+    }
 
-        // ============================================
-        // GESTIÓN DE MODALES
-        // ============================================
-        
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevenir scroll del body
-            }
+    // Actualizar navegación activa
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('onclick').includes(sectionId)) {
+            link.classList.add('active');
         }
+    });
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = ''; // Restaurar scroll
-            }
-        }
+    // Cerrar menú móvil si está abierto
+    document.getElementById('navLinks').classList.remove('active');
+}
 
-        function closeModalOnOverlay(event) {
-            if (event.target === event.currentTarget) {
-                closeModal(event.target.id);
-            }
-        }
+// ============================================
+// GESTIÓN DE MODALES
+// ============================================
 
-        // Cerrar modal con tecla ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
-                    closeModal(modal.id);
-                });
-            }
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restaurar scroll
+    }
+}
+
+function closeModalOnOverlay(event) {
+    if (event.target === event.currentTarget) {
+        closeModal(event.target.id);
+    }
+}
+
+// Cerrar modal con tecla ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+            closeModal(modal.id);
+        });
+    }
+});
+
+// ============================================
+// TEMA CLARO/OSCURO
+// ============================================
+
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('themeIcon');
+
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
+}
+
+// Cargar tema guardado al iniciar
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const icon = document.getElementById('themeIcon');
+
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
+}
+
+// ============================================
+// MENÚ MÓVIL
+// ============================================
+
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('active');
+}
+
+// ============================================
+// CERTIFICADO INTERACTIVO
+// ============================================
+
+function generarCertificado() {
+    const nombre = prompt('¡Felicidades! 🎉\n\nIntroduce tu nombre completo para generar el certificado:');
+
+    if (nombre && nombre.trim() !== '') {
+        const certDisplay = document.getElementById('certificado-display');
+        const certNombre = document.getElementById('cert-nombre');
+        const certFecha = document.getElementById('cert-fecha');
+
+        certNombre.textContent = nombre.trim();
+        certFecha.textContent = new Date().toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
 
-        // ============================================
-        // TEMA CLARO/OSCURO
-        // ============================================
-        
-        function toggleTheme() {
-            const html = document.documentElement;
-            const icon = document.getElementById('themeIcon');
-            
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            }
-        }
+        certDisplay.style.display = 'block';
+        certDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        // Cargar tema guardado al iniciar
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            const icon = document.getElementById('themeIcon');
-            
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('dark');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            }
-        }
+        // Efecto de confeti simulado con console log (en producción usar librería)
+        console.log('🎉 Certificado generado para:', nombre);
+    } else if (nombre !== null) {
+        // Usuario introdujo texto vacío
+        alert('Por favor, introduce un nombre válido para generar el certificado.');
+    }
+    // Si nombre es null, usuario canceló el prompt - no hacer nada
+}
 
-        // ============================================
-        // MENÚ MÓVIL
-        // ============================================
-        
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
+// ============================================
+// SIMULACIÓN DE DESCARGAS
+// ============================================
 
-        // ============================================
-        // CERTIFICADO INTERACTIVO
-        // ============================================
-        
-        function generarCertificado() {
-            const nombre = prompt('¡Felicidades! 🎉\n\nIntroduce tu nombre completo para generar el certificado:');
-            
-            if (nombre && nombre.trim() !== '') {
-                const certDisplay = document.getElementById('certificado-display');
-                const certNombre = document.getElementById('cert-nombre');
-                const certFecha = document.getElementById('cert-fecha');
-                
-                certNombre.textContent = nombre.trim();
-                certFecha.textContent = new Date().toLocaleDateString('es-ES', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                
-                certDisplay.style.display = 'block';
-                certDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Efecto de confeti simulado con console log (en producción usar librería)
-                console.log('🎉 Certificado generado para:', nombre);
-            } else if (nombre !== null) {
-                // Usuario introdujo texto vacío
-                alert('Por favor, introduce un nombre válido para generar el certificado.');
-            }
-            // Si nombre es null, usuario canceló el prompt - no hacer nada
-        }
-
-        // ============================================
-        // SIMULACIÓN DE DESCARGAS
-        // ============================================
-        
-        function simularDescarga(nombreArchivo) {
-            // Crear notificación visual en lugar de alert
-            const notificacion = document.createElement('div');
-            notificacion.style.cssText = `
+function simularDescarga(nombreArchivo) {
+    // Crear notificación visual en lugar de alert
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
@@ -169,23 +169,23 @@
                 font-weight: 600;
                 animation: slideInRight 0.3s ease;
             `;
-            notificacion.innerHTML = `
+    notificacion.innerHTML = `
                 <i class="fas fa-check-circle"></i>
                 <span>Descargando ${nombreArchivo}...</span>
             `;
-            
-            document.body.appendChild(notificacion);
-            
-            // Remover después de 3 segundos
-            setTimeout(() => {
-                notificacion.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => notificacion.remove(), 300);
-            }, 3000);
-        }
 
-        // Animaciones para notificaciones
-        const style = document.createElement('style');
-        style.textContent = `
+    document.body.appendChild(notificacion);
+
+    // Remover después de 3 segundos
+    setTimeout(() => {
+        notificacion.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notificacion.remove(), 300);
+    }, 3000);
+}
+
+// Animaciones para notificaciones
+const style = document.createElement('style');
+style.textContent = `
             @keyframes slideInRight {
                 from { transform: translateX(100%); opacity: 0; }
                 to { transform: translateX(0); opacity: 1; }
@@ -195,66 +195,91 @@
                 to { transform: translateX(100%); opacity: 0; }
             }
         `;
-        document.head.appendChild(style);
+document.head.appendChild(style);
 
-        // ============================================
-        // INICIALIZACIÓN
-        // ============================================
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTheme();
-            
-            // Animación de entrada para tarjetas al hacer scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('.card, .timeline-item').forEach(el => {
-                observer.observe(el);
-            });
+
+// ============================================
+// FUNCIÓN COPIAR AL PORTAPAPELES
+// ============================================
+
+function copyToClipboard(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        // Notificar éxito usando la función existente simularDescarga o similar
+        const copyBtn = document.querySelector(`.copy-btn[onclick*="${elementId}"]`);
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+        copyBtn.style.background = '#27c93f';
+        copyBtn.style.color = '#fff';
+
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.style.background = '';
+            copyBtn.style.color = '';
+        }, 2000);
+    }).catch(err => {
+        console.error('Error al copiar: ', err);
+    });
+}
+
+// ============================================
+// INICIALIZACIÓN
+// ============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadTheme();
+
+    // Animación de entrada para tarjetas al hacer scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
         });
+    }, observerOptions);
 
-        // Prevenir errores de consola por elementos no encontrados
-        window.onerror = function(msg, url, lineNo, columnNo, error) {
-            console.log('Error capturado (no crítico):', msg);
-            return false;
-        };
+    document.querySelectorAll('.card, .timeline-item').forEach(el => {
+        observer.observe(el);
+    });
+});
 
-        /* ======================
-   QUIZ PRO
+// Prevenir errores de consola por elementos no encontrados
+window.onerror = function (msg, url, lineNo, columnNo, error) {
+    console.log('Error capturado (no crítico):', msg);
+    return false;
+};
+
+/* ======================
+QUIZ PRO
 ====================== */
 
 const quizQuestions = [
-{
-    q: "¿Qué hace echo off?",
-    options: ["Oculta los comandos", "Borra archivos", "Reinicia Windows"],
-    correct: 0
-},
-{
-    q: "¿Qué comando repara archivos del sistema?",
-    options: ["dir", "sfc /scannow", "netstat"],
-    correct: 1
-},
-{
-    q: "¿Para qué sirve netstat?",
-    options: ["Ver conexiones de red", "Formatear disco", "Crear carpetas"],
-    correct: 0
-},
-{
-    q: "¿Qué instrucción ejecuta otro script?",
-    options: ["goto", "call", "echo"],
-    correct: 1
-}
+    {
+        q: "¿Qué hace echo off?",
+        options: ["Oculta los comandos", "Borra archivos", "Reinicia Windows"],
+        correct: 0
+    },
+    {
+        q: "¿Qué comando repara archivos del sistema?",
+        options: ["dir", "sfc /scannow", "netstat"],
+        correct: 1
+    },
+    {
+        q: "¿Para qué sirve netstat?",
+        options: ["Ver conexiones de red", "Formatear disco", "Crear carpetas"],
+        correct: 0
+    },
+    {
+        q: "¿Qué instrucción ejecuta otro script?",
+        options: ["goto", "call", "echo"],
+        correct: 1
+    }
 ];
 
 let quizIndex = 0;
@@ -265,9 +290,9 @@ function loadQuiz() {
     const box = document.getElementById("quiz-box");
     const progress = document.getElementById("quiz-progress-bar");
 
-    if(!box) return;
+    if (!box) return;
 
-    if(quizIndex >= quizQuestions.length){
+    if (quizIndex >= quizQuestions.length) {
         showResult();
         return;
     }
@@ -279,19 +304,19 @@ function loadQuiz() {
     box.innerHTML = `
         <div class="quiz-question">${q.q}</div>
         <div class="quiz-options">
-            ${q.options.map((o,i)=>`<button onclick="answerQuiz(${i})">${o}</button>`).join("")}
+            ${q.options.map((o, i) => `<button onclick="answerQuiz(${i})">${o}</button>`).join("")}
         </div>
-        <p style="margin-top:1rem;">Pregunta ${quizIndex+1}/${quizQuestions.length}</p>
+        <p style="margin-top:1rem;">Pregunta ${quizIndex + 1}/${quizQuestions.length}</p>
     `;
 }
 
-function answerQuiz(i){
+function answerQuiz(i) {
 
     const buttons = document.querySelectorAll(".quiz-options button");
 
     buttons.forEach(b => b.disabled = true);
 
-    if(i === quizQuestions[quizIndex].correct){
+    if (i === quizQuestions[quizIndex].correct) {
         buttons[i].classList.add("quiz-correct");
         quizScore++;
     } else {
@@ -305,14 +330,14 @@ function answerQuiz(i){
     }, 700);
 }
 
-function showResult(){
+function showResult() {
 
     const box = document.getElementById("quiz-box");
-    const percent = Math.round((quizScore / quizQuestions.length)*100);
+    const percent = Math.round((quizScore / quizQuestions.length) * 100);
 
     let color = "var(--azul)";
-    if(percent >= 80) color = "var(--verde)";
-    if(percent < 50) color = "#ff4d4d";
+    if (percent >= 80) color = "var(--verde)";
+    if (percent < 50) color = "#ff4d4d";
 
     box.innerHTML = `
         <h2 style="color:${color}">Resultado final</h2>
@@ -320,7 +345,7 @@ function showResult(){
         <button class="btn-card" onclick="restartQuiz()">Reintentar</button>
     `;
 }
-function restartQuiz(){
+function restartQuiz() {
     quizIndex = 0;
     quizScore = 0;
     loadQuiz();
@@ -344,45 +369,45 @@ async function descargarCertificadoPDF() {
     const doc = new jsPDF("landscape");
 
     /* ===== Fondo ===== */
-    doc.setFillColor(15,15,15);
-    doc.rect(0,0,297,210,"F");
+    doc.setFillColor(15, 15, 15);
+    doc.rect(0, 0, 297, 210, "F");
 
     /* ===== Marco ===== */
-    doc.setDrawColor(57,255,20);
+    doc.setDrawColor(57, 255, 20);
     doc.setLineWidth(3);
-    doc.rect(10,10,277,190);
+    doc.rect(10, 10, 277, 190);
 
     /* ===== Título ===== */
-    doc.setTextColor(255,123,0);
+    doc.setTextColor(255, 123, 0);
     doc.setFontSize(40);
-    doc.setFont("helvetica","bold");
-    doc.text("CERTIFICADO DE COMPLETITUD", 148, 40, {align:"center"});
+    doc.setFont("helvetica", "bold");
+    doc.text("CERTIFICADO DE COMPLETITUD", 148, 40, { align: "center" });
 
     /* ===== Subtítulo ===== */
-    doc.setTextColor(255,255,255);
+    doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
-    doc.text("Se otorga el presente certificado a:", 148, 65, {align:"center"});
+    doc.text("Se otorga el presente certificado a:", 148, 65, { align: "center" });
 
     /* ===== Nombre grande ===== */
-    doc.setTextColor(0,200,255);
+    doc.setTextColor(0, 200, 255);
     doc.setFontSize(36);
-    doc.text(nombre.toUpperCase(), 148, 95, {align:"center"});
+    doc.text(nombre.toUpperCase(), 148, 95, { align: "center" });
 
     /* ===== Línea ===== */
-    doc.setDrawColor(255,123,0);
+    doc.setDrawColor(255, 123, 0);
     doc.line(90, 102, 206, 102);
 
     /* ===== Texto curso ===== */
-    doc.setTextColor(255,255,255);
+    doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
 
-    doc.text("Por haber completado satisfactoriamente el curso", 148, 125, {align:"center"});
+    doc.text("Por haber completado satisfactoriamente el curso", 148, 125, { align: "center" });
 
-    doc.setFont("helvetica","bold");
-    doc.text('"Historia de Sistemas Operativos y Lenguaje Batch"', 148, 140, {align:"center"});
+    doc.setFont("helvetica", "bold");
+    doc.text('"Historia de Sistemas Operativos y Lenguaje Batch"', 148, 140, { align: "center" });
 
     /* ===== Datos extra ===== */
-    doc.setFont("helvetica","normal");
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
 
     doc.text("Nivel: Básico → Avanzado", 40, 170);
@@ -392,11 +417,10 @@ async function descargarCertificadoPDF() {
 
     /* ===== Firma ===== */
     doc.line(200, 160, 270, 160);
-    doc.text("Instructor", 235, 168, {align:"center"});
+    doc.text("Instructor", 235, 168, { align: "center" });
 
     /* ===== Descargar ===== */
     doc.save("Certificado_" + nombre + ".pdf");
 }
 
 
-    
