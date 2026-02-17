@@ -247,6 +247,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.card, .timeline-item').forEach(el => {
         observer.observe(el);
     });
+
+    // Manejar el hash de la URL para mostrar la sección correcta al cargar
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        // Un pequeño delay para asegurar que todo esté renderizado
+        setTimeout(() => showSection(hash), 100);
+    }
 });
 
 // Prevenir errores de consola por elementos no encontrados

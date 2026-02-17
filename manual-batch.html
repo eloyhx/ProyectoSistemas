@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Interactivo Batch - SO & Batch Master</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --manual-sidebar-width: 280px;
+        }
+
+        .manual-layout {
+            display: grid;
+            grid-template-columns: var(--manual-sidebar-width) 1fr;
+            min-height: calc(100vh - 70px);
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Sidebar Index */
+        .manual-sidebar {
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            background: var(--card-bg-claro);
+            padding: 2rem 1.5rem;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            scrollbar-width: thin;
+            scrollbar-color: var(--naranja) transparent;
+        }
+
+        html.dark .manual-sidebar {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .manual-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .manual-sidebar::-webkit-scrollbar-thumb {
+            background-color: var(--naranja);
+            border-radius: 10px;
+        }
+
+        .manual-index-title {
+            font-size: 1.2rem;
+            color: var(--naranja);
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .manual-nav-list {
+            list-style: none;
+        }
+
+        .manual-nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .manual-nav-link {
+            text-decoration: none;
+            color: var(--text-claro);
+            font-size: 0.95rem;
+            opacity: 0.8;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            display: block;
+            transition: var(--transicion);
+        }
+
+        .manual-nav-link:hover {
+            background: rgba(255, 123, 0, 0.1);
+            color: var(--naranja);
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        /* Content Area */
+        .manual-main {
+            padding: 3rem;
+            overflow-x: hidden;
+        }
+
+        .manual-article {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .manual-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .manual-section h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--naranja), var(--azul));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .manual-section h2 {
+            font-size: 2rem;
+            color: var(--azul);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 2px solid rgba(0, 195, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .manual-section h3 {
+            font-size: 1.5rem;
+            color: var(--naranja);
+            margin: 2rem 0 1rem;
+        }
+
+        .command-card {
+            background: var(--card-bg-claro);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--sombra);
+            border-left: 5px solid var(--azul);
+        }
+
+        .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .command-name {
+            font-family: 'Consolas', monospace;
+            font-size: 1.8rem;
+            color: var(--azul);
+            font-weight: bold;
+        }
+
+        .command-versions {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        html.dark .command-versions {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tip-box {
+            background: rgba(57, 255, 20, 0.1);
+            border-left: 4px solid var(--verde);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .error-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff4d4d;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .manual-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .manual-sidebar {
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .manual-main {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>SO & Batch Master</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a class="nav-link" href="index.html">Inicio</a></li>
+                <li><a class="nav-link" href="index.html#historia-detalle">Historia SO</a></li>
+                <li><a class="nav-link" href="index.html#batch-detalle">Lenguaje Batch</a></li>
+                <li><a class="nav-link" href="index.html#descargas-detalle">Descargas</a></li>
+                <li><a class="nav-link" href="index.html#quiz-detalle">Quiz</a></li>
+                <li><a class="nav-link" href="index.html#batexe-detalle">BAT → EXE</a></li>
+            </ul>
+
+            <div class="nav-controls">
+                <button class="btn-theme" onclick="toggleTheme()" title="Cambiar tema">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="manual-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="manual-sidebar">
+            <div class="manual-index-title">
+                <i class="fas fa-list-ul"></i> Índice del Manual
+            </div>
+            <ul class="manual-nav-list">
+                <li class="manual-nav-item"><a href="#que-es-batch" class="manual-nav-link">¿Qué es Batch?</a></li>
+                <li class="manual-nav-item"><a href="#consejos" class="manual-nav-link">Consejos y Tips</a></li>
+                <li class="manual-nav-item"><a href="#errores" class="manual-nav-link">Errores Comunes</a></li>
+                <li class="manual-nav-item">
+                    <hr style="margin: 1rem 0; opacity: 0.2;">
+                </li>
+                <li class="manual-nav-item"><strong
+                        style="color: var(--naranja); font-size: 0.8rem; text-transform: uppercase;">Comandos</strong>
+                </li>
+                <!-- JavaScript will populate the 66 commands here for brevity in the code, or I'll hardcode them if requested -->
+                <div id="dynamic-command-list"></div>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="manual-main">
+            <article class="manual-article">
+
+                <!-- Intro Section -->
+                <section id="que-es-batch" class="manual-section">
+                    <h1>Guía Completa de Batch Scripting</h1>
+                    <h2><i class="fas fa-info-circle"></i> ¿Qué es Batch?</h2>
+                    <p>Batch se refiere a un conjunto de instrucciones o comandos que se ejecutan secuencialmente en un
+                        archivo de procesamiento por lotes. En sistemas operativos Windows, estos archivos suelen tener
+                        la extensión <code>.bat</code> o <code>.cmd</code>.</p>
+                    <p>Los scripts de Batch se ejecutan dentro del símbolo del sistema (cmd.exe), lo que permite
+                        automatizar tareas repetitivas, administrar el sistema, manipular archivos y realizar tareas
+                        administrativas complejas con solo unos pocos comandos.</p>
+
+                    <h3>Características Clave:</h3>
+                    <ul>
+                        <li><strong>Automatización:</strong> Ejecuta comandos sin intervención humana de forma
+                            programada.</li>
+                        <li><strong>Simplicidad:</strong> No requiere conocimientos avanzados; se basa en comandos
+                            lógicos sencillos.</li>
+                        <li><strong>Compatibilidad:</strong> Funciona en prácticamente cualquier versión de Windows
+                            (desde XP hasta 11).</li>
+                        <li><strong>Control Total:</strong> Permite gestionar servicios, procesos y configuraciones
+                            profundas del sistema.</li>
+                    </ul>
+
+                    <div class="code-block">
+                        <span class="comment">:: Ejemplo de script básico de bienvenida</span>
+                        <span class="command">@echo</span> <span class="variable">off</span>
+                        <span class="command">mkdir</span> <span class="string">C:\MisArchivos</span>
+                        <span class="command">copy</span> <span class="string">C:\Origen\archivo.txt
+                            C:\MisArchivos\</span>
+                        <span class="command">echo</span> <span class="string">"Archivo copiado con éxito."</span>
+                        <span class="command">pause</span>
+                    </div>
+                </section>
+
+                <!-- Tips Section -->
+                <section id="consejos" class="manual-section">
+                    <h2><i class="fas fa-lightbulb"></i> Consejos y Tips</h2>
+
+                    <div class="tip-box">
+                        <h4>1. Usa <code>@echo off</code></h4>
+                        <p>Desactiva la visualización de los comandos antes de ejecutarlos para que el usuario solo vea
+                            los resultados.</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>2. Documenta con <code>rem</code> o <code>::</code></h4>
+                        <p>Un buen script siempre está comentado. Usa <code>rem</code> para comentarios formales o
+                            <code>::</code> para notas rápidas.
+                        </p>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>3. Emplea Comillas para Espacios</h4>
+                        <p>Si el nombre de una carpeta tiene espacios, envuélvelo en comillas:
+                            <code>"C:\Mis Archivos\..."</code>.
+                        </p>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>4. Modularización</h4>
+                        <p>Divide scripts largos en funciones usando <code>call :Etiqueta</code> para que el código sea
+                            mantenible.</p>
+                    </div>
+                </section>
+
+                <!-- Errors Section -->
+                <section id="errores" class="manual-section">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Errores Comunes</h2>
+
+                    <div class="error-box">
+                        <h4>Falta de comillas en variables</h4>
+                        <p>Error: <code>set dir=C:\Mis Archivos</code></p>
+                        <p>Correcto: <code>set "dir=C:\Mis Archivos"</code></p>
+                    </div>
+
+                    <div class="error-box">
+                        <h4>Expansión de variables en bucles</h4>
+                        <p>Dentro de un <code>for</code>, las variables no se actualizan solas. Usa
+                            <code>setlocal enabledelayedexpansion</code> y accede con <code>!variable!</code>.
+                        </p>
+                    </div>
+                </section>
+
+                <hr style="margin: 4rem 0; opacity: 0.1;">
+
+                <!-- Commands Container -->
+                <div id="commands-container">
+                    <!-- Commands will be inserted here -->
+                </div>
+
+            </article>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SO & Batch Master. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        const commands = [
+            { id: 1, name: "assoc", func: "Muestra o cambia la extensión de un archivo (por ejemplo, .txt o .jpg).", versions: "XP, Vista, 7, 8, 10", examples: ["assoc .txt", "assoc .txt=txtfile", "assoc .txt="] },
+            { id: 2, name: "at", func: "Inicia un comando o programa a una hora concreta, añadiéndolo al programador de tareas.", versions: "XP, Vista, 7", examples: ["at 22:00 \"C:\\ruta\\archivo.bat\"", "at 05:00 echo \"Iniciando\"", "at 18:00 \"C:\\ruta\\programa.exe\""] },
+            { id: 3, name: "attrib", func: "Muestra o modifica los atributos de un archivo (solo lectura, oculto, sistema, etc).", versions: "XP, Vista, 7, 8, 10", examples: ["attrib documento.txt", "attrib +r documento.txt", "attrib -r documento.txt"] },
+            { id: 4, name: "cacls", func: "Muestra o cambia ACL (permisos de acceso) para determinados archivos.", versions: "XP, Vista, 7, 8, 10", examples: ["cacls documento.txt", "cacls doc.txt /E /P u1:W", "cacls doc.txt /E /R u1"] },
+            { id: 5, name: "call", func: "Llama a un archivo batch desde otro o ejecuta una subrutina.", versions: "XP, Vista, 7, 8, 10", examples: ["call script.bat", "call :MiSubrutina", "call otro.bat param1"] },
+            { id: 6, name: "cd", func: "Cambia de directorio o carpeta actual.", versions: "XP, Vista, 7, 8, 10", examples: ["cd C:\\MisArchivos", "cd \\", "cd .."] },
+            { id: 7, name: "chcp", func: "Muestra o cambia la página de códigos (mapa de caracteres).", versions: "XP, Vista, 7, 8, 10", examples: ["chcp", "chcp 65001 (UTF-8)", "chcp 1252"] },
+            { id: 8, name: "chdir", func: "Cambiar el directorio o mostrar su nombre (equivalente a cd).", versions: "XP, Vista, 7, 8, 10", examples: ["chdir", "chdir C:\\Usuarios", "chdir \\"] },
+            { id: 9, name: "chkdsk", func: "Comprueba si hay errores en el disco duro y los repara.", versions: "XP, Vista, 7, 8, 10", examples: ["chkdsk C:", "chkdsk C: /f", "chkdsk C: /r"] },
+            { id: 10, name: "chkntfs", func: "Modifica la comprobación automática del disco al iniciar el sistema.", versions: "XP, Vista, 7, 8, 10", examples: ["chkntfs", "chkntfs /x C:", "chkntfs /d"] },
+            { id: 11, name: "choice", func: "Crea una lista de selección (Sí/No, A/B/C) con valor de retorno.", versions: "7, 8, 10", examples: ["choice /C YN /M \"¿Continuar?\"", "choice /C ABCD", "if errorlevel 2 goto No"] },
+            { id: 12, name: "cipher", func: "Modifica el cifrado de archivos en particiones NTFS.", versions: "XP, Vista, 7, 8, 10", examples: ["cipher /s:C:\\Dir", "cipher /e C:\\Dir", "cipher /d C:\\Dir"] },
+            { id: 13, name: "cls", func: "Limpia todo el contenido de la pantalla de la consola.", versions: "XP, Vista, 7, 8, 10", examples: ["cls"] },
+            { id: 14, name: "cmd", func: "Inicia una nueva instancia del símbolo del sistema.", versions: "XP, Vista, 7, 8, 10", examples: ["cmd", "cmd /c \"script.bat\"", "cmd /k dir"] },
+            { id: 15, name: "cmstp", func: "Instala o elimina perfiles de servicio de administración de conexiones.", versions: "XP, Vista, 7, 8, 10", examples: ["cmstp C:\\Perfil.inf", "cmstp /s", "cmstp /uninstall C:\\Perfil.inf"] },
+            { id: 16, name: "color", func: "Cambia el color de fondo y de texto de la ventana de comandos.", versions: "XP, Vista, 7, 8, 10", examples: ["color 0A (Matrix)", "color 1F (Azul/Blanco)", "color"] },
+            { id: 17, name: "comp", func: "Compara el contenido de dos o más archivos.", versions: "XP, Vista, 7, 8, 10", examples: ["comp a1.txt a2.txt", "comp a1.txt a2.txt > result.txt", "comp Dir1 Dir2"] },
+            { id: 18, name: "compact", func: "Muestra o modifica la compresión de archivos en NTFS.", versions: "XP, Vista, 7, 8, 10", examples: ["compact /s:Dir", "compact /c doc.txt", "compact /u doc.txt"] },
+            { id: 19, name: "convert", func: "Convierte sistemas de archivos de FAT a NTFS.", versions: "XP, Vista, 7, 8, 10", examples: ["convert C: /fs:ntfs", "convert D: /v", "convert E: /fs:ntfs /force"] },
+            { id: 20, name: "copy", func: "Copia uno o más archivos a otra ubicación.", versions: "XP, Vista, 7, 8, 10", examples: ["copy a.txt C:\\Destino\\", "copy *.* D:\\Copia\\", "xcopy C:\\M C:\\D /E"] },
+            { id: 21, name: "cscript", func: "Inicia el intérprete para scripts VBScript o JScript.", versions: "XP, Vista, 7, 8, 10", examples: ["cscript script.vbs", "cscript script.vbs p1 p2", "cscript //Nologo s.vbs"] },
+            { id: 22, name: "date", func: "Muestra o configura la fecha del sistema.", versions: "XP, Vista, 7, 8, 10", examples: ["date /t", "date 01-01-2023", "date MM-DD-YYYY"] },
+            { id: 23, name: "defrag", func: "Desfragmenta y optimiza las unidades de disco.", versions: "XP, Vista, 7, 8, 10", examples: ["defrag C:", "defrag D: /U /V", "defrag /C"] },
+            { id: 24, name: "del", func: "Elimina uno o más archivos específicos.", versions: "XP, Vista, 7, 8, 10", examples: ["del archivo.txt", "del *.log", "del /f /q a.txt"] },
+            { id: 25, name: "dir", func: "Muestra una lista de archivos y subdirectorios de un directorio.", versions: "XP, Vista, 7, 8, 10", examples: ["dir", "dir /a (ocultos)", "dir /t:w (por fecha)"] },
+            { id: 26, name: "diskcomp", func: "Compara el contenido de dos discos flexibles.", versions: "XP, Vista, 7, 8, 10", examples: ["diskcomp A: B:", "diskcomp /v A: B:", "diskcomp /n A: B:"] },
+            { id: 27, name: "diskpart", func: "Administrador de particiones de disco avanzado.", versions: "XP, Vista, 7, 8, 10", examples: ["diskpart", "list disk", "select disk 1"] },
+            { id: 28, name: "dism", func: "Administración y mantenimiento de imágenes de Windows (reparación).", versions: "7, 8, 10", examples: ["dism /online /get-features", "dism /online /enable-feature...", "dism /online /cleanup-image..."] },
+            { id: 29, name: "doskey", func: "Edita líneas de comando, recuerda comandos y crea macros.", versions: "XP, Vista, 7, 8, 10", examples: ["doskey cls=cls", "doskey /history", "doskey m=call script.bat $*"] },
+            { id: 30, name: "driverquery", func: "Muestra el estado y propiedades de los controladores instalados.", versions: "XP, Vista, 7, 8, 10", examples: ["driverquery", "driverquery /FO list /v", "driverquery > list.txt"] },
+            { id: 31, name: "echo", func: "Muestra mensajes o activa/desactiva el eco de comandos.", versions: "XP, Vista, 7, 8, 10", examples: ["echo Hola", "echo off", "echo %date% %time%"] },
+            { id: 32, name: "endlocal", func: "Termina la localización de cambios del entorno en un archivo batch.", versions: "XP, Vista, 7, 8, 10", examples: ["endlocal"] },
+            { id: 33, name: "erase", func: "Elimina uno o más archivos (igual que del).", versions: "XP, Vista, 7, 8, 10", examples: ["erase a.txt", "erase *.log", "erase /f a.txt"] },
+            { id: 34, name: "errorlevel", func: "Variable que almacena el código de salida del último comando.", versions: "XP, Vista, 7, 8, 10", examples: ["echo %errorlevel%", "if %errorlevel% == 0 ..."] },
+            { id: 35, name: "eventcreate", func: "Permite al administrador crear un evento personalizado en un log.", versions: "XP, Vista, 7, 8, 10", examples: ["eventcreate /ID 1 /L APP /T ERROR /D \"Fallo\""] },
+            { id: 36, name: "eventquery", func: "Lista eventos o propiedades de eventos del registro.", versions: "XP", examples: ["eventquery /l application"] },
+            { id: 37, name: "eventtriggers", func: "Configura o muestra disparadores de eventos.", versions: "XP", examples: ["eventtriggers"] },
+            { id: 38, name: "exist", func: "Condición para verificar la existencia de un archivo o carpeta.", versions: "XP, Vista, 7, 8, 10", examples: ["if exist a.txt echo Si", "if not exist ..."] },
+            { id: 39, name: "exit", func: "Sale del programa cmd.exe o del script actual.", versions: "XP, Vista, 7, 8, 10", examples: ["exit", "exit /b 1"] },
+            { id: 40, name: "expand", func: "Expande uno o varios archivos comprimidos (.cab).", versions: "XP, Vista, 7, 8, 10", examples: ["expand a.cab -F:* C:\\D", "expand a.cab -D"] },
+            { id: 41, name: "fc", func: "Compara dos archivos y muestra las diferencias entre ellos.", versions: "XP, Vista, 7, 8, 10", examples: ["fc a1.txt a2.txt", "fc /i a1.txt a2.txt", "fc /b a1.dat a2.dat"] },
+            { id: 42, name: "find", func: "Busca una cadena de texto en uno o más archivos.", versions: "XP, Vista, 7, 8, 10", examples: ["find \"Error\" a.txt", "find \"Fallo\" *.log"] },
+            { id: 43, name: "findstr", func: "Busca cadenas usando expresiones regulares en archivos.", versions: "XP, Vista, 7, 8, 10", examples: ["findstr \"term\" a.txt", "findstr /C:\"A\" /C:\"B\" a.txt"] },
+            { id: 44, name: "for", func: "Ejecuta un comando para cada archivo en un conjunto de archivos.", versions: "XP, Vista, 7, 8, 10", examples: ["for %%f in (*) do echo %%f", "for /L %%i in (1,1,5) do ..."] },
+            { id: 45, name: "format", func: "Formatea un disco para ser usado con Windows.", versions: "XP, Vista, 7, 8, 10", examples: ["format D: /FS:NTFS /Q", "format E: /FS:FAT32"] },
+            { id: 46, name: "fsutil", func: "Realiza tareas relacionadas con archivos FAT y NTFS.", versions: "XP, Vista, 7, 8, 10", examples: ["fsutil volume diskfree C:", "fsutil file createnew a.txt 100"] },
+            { id: 47, name: "ftp", func: "Transfiere archivos hacia y desde un servidor FTP.", versions: "XP, Vista, 7, 8, 10", examples: ["ftp server.com", "put a.txt", "get b.txt"] },
+            { id: 48, name: "ftype", func: "Muestra o modifica los tipos de archivos usados en asociaciones.", versions: "XP, Vista, 7, 8, 10", examples: ["ftype txtfile", "ftype MiEx=\"prog.exe\" \"%1\""] },
+            { id: 49, name: "getmac", func: "Devuelve la dirección MAC de los adaptadores de red.", versions: "XP, Vista, 7, 8, 10", examples: ["getmac", "getmac /v"] },
+            { id: 50, name: "goto", func: "Dirige el flujo del script a una etiqueta marcada.", versions: "XP, Vista, 7, 8, 10", examples: ["goto :Etiqueta", ":Etiqueta"] },
+            { id: 51, name: "gpresult", func: "Muestra información de RSOP para un usuario y equipo.", versions: "XP, Vista, 7, 8, 10", examples: ["gpresult /r", "gpresult /h report.html"] },
+            { id: 52, name: "gpupdate", func: "Actualiza la configuración de las directivas de grupo.", versions: "XP, Vista, 7, 8, 10", examples: ["gpupdate", "gpupdate /force"] },
+            { id: 53, name: "graftabl", func: "Permite mostrar caracteres extendidos en modo gráfico.", versions: "XP, Vista, 7, 8, 10", examples: ["graftabl", "graftabl /off"] },
+            { id: 54, name: "help", func: "Proporciona información de ayuda para los comandos de Windows.", versions: "XP, Vista, 7, 8, 10", examples: ["help", "help dir"] },
+            { id: 55, name: "hostname", func: "Muestra el nombre del host actual del sistema.", versions: "XP, Vista, 7, 8, 10", examples: ["hostname"] },
+            { id: 56, name: "icacls", func: "Muestra o modifica las listas de control de acceso (ACL).", versions: "7, 8, 10", examples: ["icacls a.txt", "icacls a.txt /grant u:F"] },
+            { id: 57, name: "if", func: "Realiza el procesamiento condicional en archivos batch.", versions: "XP, Vista, 7, 8, 10", examples: ["if exist a.txt ...", "if \"%V%\"==\"1\" ..."] },
+            { id: 58, name: "ipconfig", func: "Muestra y gestiona la configuración de red TCP/IP.", versions: "XP, Vista, 7, 8, 10", examples: ["ipconfig", "ipconfig /all", "ipconfig /flushdns"] },
+            { id: 59, name: "irftp", func: "Envía archivos a través de un enlace infrarrojo.", versions: "XP, Vista, 7, 8, 10", examples: ["irftp send a.txt"] },
+            { id: 60, name: "label", func: "Crea, cambia o elimina la etiqueta de volumen de un disco.", versions: "XP, Vista, 7, 8, 10", examples: ["label C: DiscoLocal"] },
+            { id: 61, name: "logman", func: "Gestiona registros de alertas y rendimiento.", versions: "XP, Vista, 7, 8, 10", examples: ["logman start MyLog"] },
+            { id: 62, name: "mkdir", func: "Crea un nuevo directorio (carpeta).", versions: "XP, Vista, 7, 8, 10", examples: ["mkdir NuevaCarpeta", "mkdir C:\\A\\B"] },
+            { id: 63, name: "mmc", func: "Abre la consola de administración de Microsoft.", versions: "XP, Vista, 7, 8, 10", examples: ["mmc", "mmc compmgmt.msc"] },
+            { id: 64, name: "mode", func: "Configura dispositivos de sistema (puertos, pantalla).", versions: "XP, Vista, 7, 8, 10", examples: ["mode con: cols=80 lines=25"] },
+            { id: 65, name: "more", func: "Muestra la información pantalla a pantalla.", versions: "XP, Vista, 7, 8, 10", examples: ["more a.txt", "dir | more"] },
+            { id: 66, name: "mountvol", func: "Crea, elimina o lista puntos de montaje de volumen.", versions: "XP, Vista, 7, 8, 10", examples: ["mountvol", "mountvol C:\\P /d"] }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const dynamicList = document.getElementById('dynamic-command-list');
+            const container = document.getElementById('commands-container');
+
+            commands.forEach(cmd => {
+                // Populate Sidebar
+                const li = document.createElement('li');
+                li.className = 'manual-nav-item';
+                li.innerHTML = `<a href="#cmd-${cmd.id}" class="manual-nav-link">${cmd.id}. ${cmd.name}</a>`;
+                dynamicList.appendChild(li);
+
+                // Populate Main Content
+                const section = document.createElement('section');
+                section.id = `cmd-${cmd.id}`;
+                section.className = 'manual-section';
+                section.innerHTML = `
+                    <div class="command-card">
+                        <div class="command-header">
+                            <span class="command-name">${cmd.name}</span>
+                            <span class="command-versions">${cmd.versions}</span>
+                        </div>
+                        <p><strong>Función:</strong> ${cmd.func}</p>
+                        <div class="code-block">
+                            ${cmd.examples.map(ex => `<span class="command">${ex}</span>`).join('<br>')}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        });
+    </script>
+</body>
+
+</html>
