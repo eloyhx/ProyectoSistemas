@@ -304,7 +304,8 @@
                 <i class="fas fa-layer-group level-icon"></i>
                 <span class="level-tag">NIVEL 2</span>
                 <h3>Intermedio</h3>
-                <p>Domina la lógica del scripting con bucles avanzados, validación, procesamiento de datos y modularización.</p>
+                <p>Domina la lógica del scripting con bucles avanzados, validación, procesamiento de datos y
+                    modularización.</p>
                 <button class="btn-card" style="background: var(--naranja); color: white; margin-top: 1rem;">
                     Ver contenido <i class="fas fa-play"></i>
                 </button>
@@ -315,12 +316,28 @@
                 <i class="fas fa-rocket level-icon"></i>
                 <span class="level-tag">NIVEL 3</span>
                 <h3>Avanzado</h3>
-                <p>Automatización profesional del sistema: mantenimiento, optimización y administración con script completo explicado paso a paso.</p>
+                <p>Automatización profesional del sistema: mantenimiento, optimización y administración con script
+                    completo explicado paso a paso.</p>
                 <button class="btn-card" style="background: var(--verde); color: #0a0a0a; margin-top: 1rem;">
                     Ver contenido <i class="fas fa-play"></i>
                 </button>
             </div>
         </div>
+
+        <!-- Botón al Manual Interactivo -->
+        <div
+            style="text-align: center; margin-top: 3rem; padding: 2.5rem; background: var(--card-bg-claro); border-radius: var(--radius); border: 2px solid var(--azul); box-shadow: var(--sombra);">
+            <h3 style="color: var(--azul); margin-bottom: 1rem;">
+                <i class="fas fa-book-open"></i> Guía Completa de Batch Scripting
+            </h3>
+            <p style="margin-bottom: 1.5rem; opacity: 0.9;">Explora nuestro manual interactivo con más de 66 comandos
+                detallados, ejemplos y consejos de expertos.</p>
+            <a href="manual-batch.html" class="btn-card"
+                style="background: var(--azul); color: white; text-decoration: none; padding: 1rem 2.5rem; font-size: 1.1rem;">
+                <i class="fas fa-external-link-alt"></i> Abrir Manual Interactivo
+            </a>
+        </div>
+
         <!-- =========================
      EXPLICACIÓN DEL MENÚ
      ========================= -->
@@ -633,165 +650,165 @@
                 </button>
             </div>
             <div class="modal-body">
-    <h4>Scripts Intermedios y Estructuras de Control</h4>
-    <p>
-        En este nivel trabajamos estructuras que permiten crear automatizaciones reales.
-        Aquí empezamos a combinar lógica, repetición y procesamiento de datos,
-        dando el salto entre scripts simples y scripts estructurados.
-    </p>
+                <h4>Scripts Intermedios y Estructuras de Control</h4>
+                <p>
+                    En este nivel trabajamos estructuras que permiten crear automatizaciones reales.
+                    Aquí empezamos a combinar lógica, repetición y procesamiento de datos,
+                    dando el salto entre scripts simples y scripts estructurados.
+                </p>
 
-    <!-- 1 -->
-    <h5 style="margin-top: 1.5rem; color: var(--naranja);">1. Condicionales IF con operadores avanzados</h5>
-    <div class="code-block">
-        if %numero% GEQ 10 (
-            echo Numero mayor o igual que 10
-        )
+                <!-- 1 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">1. Condicionales IF con operadores avanzados</h5>
+                <div class="code-block">
+                    if %numero% GEQ 10 (
+                    echo Numero mayor o igual que 10
+                    )
 
-        if not exist archivo.txt (
-            echo El archivo no existe
-        )
+                    if not exist archivo.txt (
+                    echo El archivo no existe
+                    )
 
-        if errorlevel 1 echo Se produjo un error
-    </div>
-    <p>
-        En este nivel utilizamos comparadores avanzados como GEQ, LEQ, GTR o LSS.
-        También controlamos errores del sistema mediante <code>errorlevel</code>.
-        Esto permite que el script tome decisiones técnicas basadas en resultados reales.
-    </p>
+                    if errorlevel 1 echo Se produjo un error
+                </div>
+                <p>
+                    En este nivel utilizamos comparadores avanzados como GEQ, LEQ, GTR o LSS.
+                    También controlamos errores del sistema mediante <code>errorlevel</code>.
+                    Esto permite que el script tome decisiones técnicas basadas en resultados reales.
+                </p>
 
-    <!-- 2 -->
-    <h5 style="margin-top: 1.5rem; color: var(--naranja);">2. Bucles FOR estructurados</h5>
-    <div class="code-block">
-        for %%i in (*.txt) do (
-            echo Procesando archivo: %%i
-        )
+                <!-- 2 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">2. Bucles FOR estructurados</h5>
+                <div class="code-block">
+                    for %%i in (*.txt) do (
+                    echo Procesando archivo: %%i
+                    )
 
-        for /l %%i in (1,1,10) do (
-            echo Contador: %%i
-        )
-    </div>
-    <p>
-        El bucle FOR permite recorrer archivos o crear contadores.
-        Es una herramienta clave para automatizar tareas repetitivas,
-        como procesar carpetas completas o ejecutar acciones múltiples.
-    </p>
+                    for /l %%i in (1,1,10) do (
+                    echo Contador: %%i
+                    )
+                </div>
+                <p>
+                    El bucle FOR permite recorrer archivos o crear contadores.
+                    Es una herramienta clave para automatizar tareas repetitivas,
+                    como procesar carpetas completas o ejecutar acciones múltiples.
+                </p>
 
-    <!-- 3 -->
-    <h5 style="margin-top: 1.5rem; color: var(--naranja);">3. FOR /F para procesamiento de datos</h5>
-    <div class="code-block">
-        for /f "tokens=1,2 delims=," %%a in (usuarios.csv) do (
-            echo Usuario: %%a - Rol: %%b
-        )
-    </div>
-    <p>
-        FOR /F permite analizar archivos línea por línea.
-        Es especialmente útil para trabajar con logs, CSV o salida de comandos.
-        Aquí el script comienza a comportarse como un procesador de datos.
-    </p>
+                <!-- 3 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">3. FOR /F para procesamiento de datos</h5>
+                <div class="code-block">
+                    for /f "tokens=1,2 delims=," %%a in (usuarios.csv) do (
+                    echo Usuario: %%a - Rol: %%b
+                    )
+                </div>
+                <p>
+                    FOR /F permite analizar archivos línea por línea.
+                    Es especialmente útil para trabajar con logs, CSV o salida de comandos.
+                    Aquí el script comienza a comportarse como un procesador de datos.
+                </p>
 
-    <!-- 4 -->
-    <h5 style="margin-top: 1.5rem; color: var(--naranja);">4. Expansión retardada y control dinámico</h5>
-    <div class="code-block">
-        setlocal enabledelayedexpansion
-        set contador=0
+                <!-- 4 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">4. Expansión retardada y control dinámico</h5>
+                <div class="code-block">
+                    setlocal enabledelayedexpansion
+                    set contador=0
 
-        for %%i in (1 2 3 4 5) do (
-            set /a contador+=1
-            echo Valor actual: !contador!
-        )
-    </div>
-    <p>
-        La expansión retardada permite actualizar variables dentro de estructuras repetitivas.
-        Sin ella, los valores no se actualizan correctamente dentro de los bucles.
-        Es un concepto clave para scripts más complejos.
-    </p>
+                    for %%i in (1 2 3 4 5) do (
+                    set /a contador+=1
+                    echo Valor actual: !contador!
+                    )
+                </div>
+                <p>
+                    La expansión retardada permite actualizar variables dentro de estructuras repetitivas.
+                    Sin ella, los valores no se actualizan correctamente dentro de los bucles.
+                    Es un concepto clave para scripts más complejos.
+                </p>
 
-    <!-- 5 -->
-    <h5 style="margin-top: 1.5rem; color: var(--naranja);">5. Funciones y modularización con CALL</h5>
-    <div class="code-block">
-        call :saludo Juan
-        call :saludo Maria
-        goto :eof
+                <!-- 5 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">5. Funciones y modularización con CALL</h5>
+                <div class="code-block">
+                    call :saludo Juan
+                    call :saludo Maria
+                    goto :eof
 
-        :saludo
-        echo Bienvenido %1
-        exit /b
-    </div>
-    <p>
-        CALL permite dividir el script en bloques reutilizables.
-        Esto mejora la organización, facilita el mantenimiento y evita duplicación de código.
-        Es el paso previo a crear scripts estructurados de nivel profesional.
-    </p>
+                    :saludo
+                    echo Bienvenido %1
+                    exit /b
+                </div>
+                <p>
+                    CALL permite dividir el script en bloques reutilizables.
+                    Esto mejora la organización, facilita el mantenimiento y evita duplicación de código.
+                    Es el paso previo a crear scripts estructurados de nivel profesional.
+                </p>
 
-    <!-- 6 -->
-    <h5 style="margin-top: 1.5rem; color: var(--naranja);">6. Procesamiento combinado (lógica + bucles)</h5>
-    <div class="code-block">
-        for %%i in (*.log) do (
-            if exist %%i (
-                echo Analizando %%i
-                find "ERROR" %%i
-            )
-        )
-    </div>
-    <p>
-        Aquí combinamos estructuras IF y FOR para analizar múltiples archivos.
-        Esta integración permite crear scripts capaces de auditar carpetas,
-        revisar errores o procesar información de forma automatizada.
-    </p>
-    <!-- 7 -->
-     <h5 style="margin-top: 1.5rem; color: var(--naranja);">7. Parámetros avanzados (%~dp1, %~nx1)</h5>
-    <div class="code-block">
-             echo Ruta completa: %~f1
-             echo Nombre archivo: %~nx1
-            echo Solo extensión: %~x1
-    </div>
-    <p>
-    Batch permite modificar parámetros de entrada usando el símbolo ~.
-    Esto permite obtener la ruta completa, solo el nombre, la extensión
-    o el directorio del archivo pasado como argumento.
-    Es muy útil en scripts que procesan archivos externos.
-    </p>
-    <!-- 8 -->
-    <h5 style="margin-top: 1.5rem; color: var(--naranja);">8. Uso de SHIFT</h5>
-<div class="code-block">
-    :inicio
-    echo Argumento actual: %1
-    shift
-    if not "%1"=="" goto inicio
-</div>
-<p>
-    SHIFT permite desplazar los parámetros de entrada.
-    Es útil cuando un script recibe múltiples argumentos
-    y necesita procesarlos uno por uno dinámicamente.
-</p>
-<!-- 9 -->
-<h5 style="margin-top: 1.5rem; color: var(--naranja);">9. Operadores lógicos</h5>
-<div class="code-block">
-    mkdir prueba && echo Carpeta creada correctamente
-    del archivo.txt || echo No se pudo eliminar el archivo
-</div>
-<p>
-    El operador && ejecuta el siguiente comando solo si el anterior fue exitoso.
-    El operador || se ejecuta si el comando anterior falla.
-    Permiten crear lógica compacta y profesional.
-</p>
-<!-- 10 -->
-<h5 style="margin-top: 1.5rem; color: var(--naranja);">10. Filtrado con FIND y FINDSTR</h5>
-<div class="code-block">
-    type log.txt | find "ERROR"
-    findstr /i "admin" usuarios.txt
-</div>
-<p>
-    FIND y FINDSTR permiten buscar texto dentro de archivos.
-    Son fundamentales para analizar logs, validar información
-    o filtrar datos dentro de scripts automatizados.
-</p>
-    <a href="#batch-avanzado-seccion" class="btn-section-link"
-        onclick="closeModal('modal-intermedio'); showSection('batch-avanzado-seccion')">
-        Ir al Script Avanzado <i class="fas fa-arrow-right"></i>
-    </a>
-</div>
-</div>
+                <!-- 6 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">6. Procesamiento combinado (lógica + bucles)</h5>
+                <div class="code-block">
+                    for %%i in (*.log) do (
+                    if exist %%i (
+                    echo Analizando %%i
+                    find "ERROR" %%i
+                    )
+                    )
+                </div>
+                <p>
+                    Aquí combinamos estructuras IF y FOR para analizar múltiples archivos.
+                    Esta integración permite crear scripts capaces de auditar carpetas,
+                    revisar errores o procesar información de forma automatizada.
+                </p>
+                <!-- 7 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">7. Parámetros avanzados (%~dp1, %~nx1)</h5>
+                <div class="code-block">
+                    echo Ruta completa: %~f1
+                    echo Nombre archivo: %~nx1
+                    echo Solo extensión: %~x1
+                </div>
+                <p>
+                    Batch permite modificar parámetros de entrada usando el símbolo ~.
+                    Esto permite obtener la ruta completa, solo el nombre, la extensión
+                    o el directorio del archivo pasado como argumento.
+                    Es muy útil en scripts que procesan archivos externos.
+                </p>
+                <!-- 8 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">8. Uso de SHIFT</h5>
+                <div class="code-block">
+                    :inicio
+                    echo Argumento actual: %1
+                    shift
+                    if not "%1"=="" goto inicio
+                </div>
+                <p>
+                    SHIFT permite desplazar los parámetros de entrada.
+                    Es útil cuando un script recibe múltiples argumentos
+                    y necesita procesarlos uno por uno dinámicamente.
+                </p>
+                <!-- 9 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">9. Operadores lógicos</h5>
+                <div class="code-block">
+                    mkdir prueba && echo Carpeta creada correctamente
+                    del archivo.txt || echo No se pudo eliminar el archivo
+                </div>
+                <p>
+                    El operador && ejecuta el siguiente comando solo si el anterior fue exitoso.
+                    El operador || se ejecuta si el comando anterior falla.
+                    Permiten crear lógica compacta y profesional.
+                </p>
+                <!-- 10 -->
+                <h5 style="margin-top: 1.5rem; color: var(--naranja);">10. Filtrado con FIND y FINDSTR</h5>
+                <div class="code-block">
+                    type log.txt | find "ERROR"
+                    findstr /i "admin" usuarios.txt
+                </div>
+                <p>
+                    FIND y FINDSTR permiten buscar texto dentro de archivos.
+                    Son fundamentales para analizar logs, validar información
+                    o filtrar datos dentro de scripts automatizados.
+                </p>
+                <a href="#batch-avanzado-seccion" class="btn-section-link"
+                    onclick="closeModal('modal-intermedio'); showSection('batch-avanzado-seccion')">
+                    Ir al Script Avanzado <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
     </div>
     </div>
 
@@ -1030,82 +1047,103 @@
                 </p>
             </div>
             <div class="line-explanation">
-    <span class="line-number">Línea 46-55</span>
-    <div class="code-block" style="margin: 0.5rem 0;">
-        <span class="command">set</span> <span class="string">"logFile=%~dp0registro_mantenimiento.txt"</span>
-        <span class="command">echo</span> <span class="string">"==== INICIO DEL MANTENIMIENTO ===="</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-        <span class="command">echo</span> <span class="string">"Fecha: %date% %time%"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-        <span class="command">echo</span> <span class="string">"Usuario: %username%"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-        <span class="command">echo</span> <span class="string">"Equipo: %computername%"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-    </div>
-    <p class="line-desc">
-        <strong>%~dp0</strong> - Representa la ruta donde se encuentra el script en ejecución.<br>
-        <strong>%username%</strong> - Usuario actual que ejecuta el script.<br>
-        <strong>%computername%</strong> - Nombre del equipo.<br>
-        Este bloque crea un registro profesional con trazabilidad completa del mantenimiento.
-    </p>
-</div>
-<div class="line-explanation">
-    <span class="line-number">Línea 56-65</span>
-    <div class="code-block" style="margin: 0.5rem 0;">
-        <span class="command">net</span> <span class="variable">session</span> <span class="command">></span>nul <span class="variable">2>&1</span>
-        <span class="command">if</span> <span class="variable">%errorlevel%</span> <span class="variable">neq</span> <span class="string">0</span> (
-        <span class="command">echo</span> <span class="string">"ERROR: Ejecutar como administrador."</span>
-        <span class="command">pause</span>
-        <span class="command">exit</span>
-        )
-    </div>
-    <p class="line-desc">
-        <strong>net session</strong> - Comprueba si el script tiene privilegios elevados.<br>
-        <strong>2>&1</strong> - Redirige errores al mismo destino que la salida estándar.<br>
-        Si no se ejecuta como administrador, el script se detiene para evitar fallos críticos.
-    </p>
-</div>
-<div class="line-explanation">
-    <span class="line-number">Línea 66-75</span>
-    <div class="code-block" style="margin: 0.5rem 0;">
-        <span class="command">echo</span> <span class="string">"Eliminando archivos temporales..."</span>
-        <span class="command">del</span> <span class="variable">/s</span> <span class="variable">/q</span> <span class="variable">%temp%\*</span> <span class="command">></span>nul <span class="variable">2>&1</span>
-        <span class="command">del</span> <span class="variable">/s</span> <span class="variable">/q</span> <span class="string">C:\Windows\Temp\*</span> <span class="command">></span>nul <span class="variable">2>&1</span>
-        <span class="command">echo</span> <span class="string">"Temporales eliminados"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-    </div>
-    <p class="line-desc">
-        <strong>%temp%</strong> - Carpeta temporal del usuario actual.<br>
-        <strong>/s</strong> - Incluye subdirectorios.<br>
-        <strong>/q</strong> - Ejecuta en modo silencioso.<br>
-        Libera espacio en disco y elimina archivos residuales.
-    </p>
-</div>
-<div class="line-explanation">
-    <span class="line-number">Línea 76-85</span>
-    <div class="code-block" style="margin: 0.5rem 0;">
-        <span class="command">tasklist</span> <span class="command">|</span> <span class="command">find</span> <span class="string">"notepad.exe"</span> <span class="command">></span>nul
-        <span class="command">if</span> <span class="variable">%errorlevel%</span>==<span class="string">0</span> 
-        <span class="command">taskkill</span> <span class="variable">/f</span> <span class="variable">/im</span> <span class="string">notepad.exe</span>
-        <span class="command">echo</span> <span class="string">"Procesos innecesarios cerrados"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-    </div>
-    <p class="line-desc">
-        <strong>tasklist</strong> - Lista procesos activos.<br>
-        <strong>taskkill /f</strong> - Fuerza el cierre del proceso indicado.<br>
-        Permite liberar recursos antes de finalizar el mantenimiento.
-    </p>
-</div>
-<div class="line-explanation">
-    <span class="line-number">Línea 86-95</span>
-    <div class="code-block" style="margin: 0.5rem 0;">
-        <span class="command">echo</span> <span class="string">"========================================"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-        <span class="command">echo</span> <span class="string">"Mantenimiento completado correctamente"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-        <span class="command">echo</span> <span class="string">"Fecha finalizacion: %date% %time%"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
-        <span class="command">echo</span> <span class="string">"Log guardado en: %logFile%"</span>
-        <span class="command">pause</span>
-    </div>
-    <p class="line-desc">
-        Marca el cierre del proceso en el archivo de registro.<br>
-        Permite auditoría posterior y confirma al usuario que el mantenimiento finalizó correctamente.
-    </p>
-</div>
+                <span class="line-number">Línea 46-55</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+                    <span class="command">set</span> <span
+                        class="string">"logFile=%~dp0registro_mantenimiento.txt"</span>
+                    <span class="command">echo</span> <span class="string">"==== INICIO DEL MANTENIMIENTO ===="</span>
+                    <span class="command">>></span> <span class="string">"%logFile%"</span>
+                    <span class="command">echo</span> <span class="string">"Fecha: %date% %time%"</span> <span
+                        class="command">>></span> <span class="string">"%logFile%"</span>
+                    <span class="command">echo</span> <span class="string">"Usuario: %username%"</span> <span
+                        class="command">>></span> <span class="string">"%logFile%"</span>
+                    <span class="command">echo</span> <span class="string">"Equipo: %computername%"</span> <span
+                        class="command">>></span> <span class="string">"%logFile%"</span>
+                </div>
+                <p class="line-desc">
+                    <strong>%~dp0</strong> - Representa la ruta donde se encuentra el script en ejecución.<br>
+                    <strong>%username%</strong> - Usuario actual que ejecuta el script.<br>
+                    <strong>%computername%</strong> - Nombre del equipo.<br>
+                    Este bloque crea un registro profesional con trazabilidad completa del mantenimiento.
+                </p>
+            </div>
+            <div class="line-explanation">
+                <span class="line-number">Línea 56-65</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+                    <span class="command">net</span> <span class="variable">session</span> <span
+                        class="command">></span>nul <span class="variable">2>&1</span>
+                    <span class="command">if</span> <span class="variable">%errorlevel%</span> <span
+                        class="variable">neq</span> <span class="string">0</span> (
+                    <span class="command">echo</span> <span class="string">"ERROR: Ejecutar como administrador."</span>
+                    <span class="command">pause</span>
+                    <span class="command">exit</span>
+                    )
+                </div>
+                <p class="line-desc">
+                    <strong>net session</strong> - Comprueba si el script tiene privilegios elevados.<br>
+                    <strong>2>&1</strong> - Redirige errores al mismo destino que la salida estándar.<br>
+                    Si no se ejecuta como administrador, el script se detiene para evitar fallos críticos.
+                </p>
+            </div>
+            <div class="line-explanation">
+                <span class="line-number">Línea 66-75</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+                    <span class="command">echo</span> <span class="string">"Eliminando archivos temporales..."</span>
+                    <span class="command">del</span> <span class="variable">/s</span> <span class="variable">/q</span>
+                    <span class="variable">%temp%\*</span> <span class="command">></span>nul <span
+                        class="variable">2>&1</span>
+                    <span class="command">del</span> <span class="variable">/s</span> <span class="variable">/q</span>
+                    <span class="string">C:\Windows\Temp\*</span> <span class="command">></span>nul <span
+                        class="variable">2>&1</span>
+                    <span class="command">echo</span> <span class="string">"Temporales eliminados"</span> <span
+                        class="command">>></span> <span class="string">"%logFile%"</span>
+                </div>
+                <p class="line-desc">
+                    <strong>%temp%</strong> - Carpeta temporal del usuario actual.<br>
+                    <strong>/s</strong> - Incluye subdirectorios.<br>
+                    <strong>/q</strong> - Ejecuta en modo silencioso.<br>
+                    Libera espacio en disco y elimina archivos residuales.
+                </p>
+            </div>
+            <div class="line-explanation">
+                <span class="line-number">Línea 76-85</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+                    <span class="command">tasklist</span> <span class="command">|</span> <span
+                        class="command">find</span> <span class="string">"notepad.exe"</span> <span
+                        class="command">></span>nul
+                    <span class="command">if</span> <span class="variable">%errorlevel%</span>==<span
+                        class="string">0</span>
+                    <span class="command">taskkill</span> <span class="variable">/f</span> <span
+                        class="variable">/im</span> <span class="string">notepad.exe</span>
+                    <span class="command">echo</span> <span class="string">"Procesos innecesarios cerrados"</span> <span
+                        class="command">>></span> <span class="string">"%logFile%"</span>
+                </div>
+                <p class="line-desc">
+                    <strong>tasklist</strong> - Lista procesos activos.<br>
+                    <strong>taskkill /f</strong> - Fuerza el cierre del proceso indicado.<br>
+                    Permite liberar recursos antes de finalizar el mantenimiento.
+                </p>
+            </div>
+            <div class="line-explanation">
+                <span class="line-number">Línea 86-95</span>
+                <div class="code-block" style="margin: 0.5rem 0;">
+                    <span class="command">echo</span> <span
+                        class="string">"========================================"</span> <span class="command">>></span>
+                    <span class="string">"%logFile%"</span>
+                    <span class="command">echo</span> <span class="string">"Mantenimiento completado
+                        correctamente"</span> <span class="command">>></span> <span class="string">"%logFile%"</span>
+                    <span class="command">echo</span> <span class="string">"Fecha finalizacion: %date% %time%"</span>
+                    <span class="command">>></span> <span class="string">"%logFile%"</span>
+                    <span class="command">echo</span> <span class="string">"Log guardado en: %logFile%"</span>
+                    <span class="command">pause</span>
+                </div>
+                <p class="line-desc">
+                    Marca el cierre del proceso en el archivo de registro.<br>
+                    Permite auditoría posterior y confirma al usuario que el mantenimiento finalizó correctamente.
+                </p>
+            </div>
 
-            
+
 
             <div
                 style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,123,0,0.1); border-radius: 10px; border-left: 4px solid var(--naranja);">
@@ -1145,18 +1183,6 @@
 
         <!-- ================= GRID DESCARGAS ================= -->
         <div class="downloads-grid">
-
-            <!-- PDF -->
-            <div class="download-card">
-                <i class="fas fa-file-pdf download-icon"></i>
-                <h3>Guía Completa PDF</h3>
-                <p>Manual de 50+ páginas con todos los comandos Batch.</p>
-                <a href="manual-batch.html" class="btn-download">
-                    <i class="fas fa-book"></i> Ver Manual Interactivo
-                </a>
-
-
-            </div>
 
             <!-- BAT -->
             <div class="download-card">
